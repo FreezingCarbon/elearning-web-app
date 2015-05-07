@@ -35,10 +35,8 @@
 
     <div class="content">
 
-        <div class="content_resize">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-        </div>
     </div>
     <div class="fbg">
         <div class="fbg_resize">
