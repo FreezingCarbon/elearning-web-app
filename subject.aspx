@@ -5,13 +5,19 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="Stylesheets" runat="Server">
     <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function viewVideo(videoID) {
+            $("#video_model").modal('show');
+        }
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div class="menu_nav">
         <ul>
             <li><a href="home.aspx">Home</a></li>
             <li><a href="schedule.aspx">Schedule</a></li>
-                        <li><a href="Messages.aspx">Messages</a></li>
+            <li><a href="Messages.aspx">Messages</a></li>
 
             <li><a href="user.aspx">Ahmed</a></li>
             <li><a href="logout.aspx">Logout</a></li>
@@ -37,7 +43,7 @@
                         <tbody>
                             <tr>
                                 <td>22-05-2014</td>
-                                <td><a href="video.aspx">View</a></td>
+                                <td><button  onclick="viewVideo('23')">View</button></td>
                                 <td><a href="notes.aspx">Download</a></td>
                             </tr>
                             <%if (Request.QueryString["type"] == "Teacher")
@@ -81,17 +87,17 @@
                             <div class="form-inline">
                                 <div class="form-group">
                                     <label for="date">Date</label>
-                                    <input type="date"  class="form-control" name="date">
+                                    <input type="date" class="form-control" name="date">
                                 </div>
                                 <br />
                                 <div class="form-group">
                                     <label for="video">video</label>
-                                    <input type="file"  class="form-control" name="video" >
+                                    <input type="file" class="form-control" name="video">
                                 </div>
                                 <br />
                                 <div class="form-group">
                                     <label for="notes">Notes</label>
-                                    <input type="file"  class="form-control" name="notes">
+                                    <input type="file" class="form-control" name="notes">
                                 </div>
                             </div>
                         </form>
@@ -103,9 +109,27 @@
                 </div>
             </div>
         </div>
+        <div id="video_model" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Session Video</h4>
+                    </div>
+                    <div class="modal-body">
 
+                        <video width="100%" controls>
+                              <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
-
 
 </asp:Content>
