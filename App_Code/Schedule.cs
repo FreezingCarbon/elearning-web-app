@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-class Schedule
+
+public class Schedule
 {
     public int scheduleID;
     public int classRoomID;
@@ -22,7 +23,7 @@ class Schedule
         this.day = day;
         this.start = start;
         this.end = end;
-        classRoomID = c.classRoomID;
+        classRoomID = classRomm.classRoomID;
         subjectID = subject.subjectID;
     }
 }

@@ -14,29 +14,27 @@
 
 </asp:Content>
 <%-- Add content controls here --%>
+
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content">
         <div class="content_resize">
-            <%if (Request.Form["type"] == "Admin")
-              { %>
             <div class="mainbar">
+                <%if (Request.Form["type"] == "Admin" || (true)) // admin see all levels all subjects
+                  {
+                      foreach (Level level in Level.getAllLevels())
+                      {%>
                 <div class="article">
-                    <h2><span>First grade</span></h2>
+                    <h2><span><%=level.levelName%></span></h2>
                     <div class="clr"></div>
-                    <p><a href="subject.aspx">Arabic</a></p>
-                    <p><a href="subject.aspx">English</a></p>
+                    <%foreach (Subject subject in level.getSubjects())
+                      {%>
+                    <p><a href="subject.aspx"><%=subject.title%></a></p>
+                    <%}%>
                 </div>
-                <div class="article">
-                    <h2><span>Second grade</span></h2>
-                    <div class="clr"></div>
-                    <p><a href="subject.aspx">Math</a></p>
-                    <p><a href="subject.aspx">English</a></p>
-                </div>
-            </div>
-            <%}
-              else if (Request.Form["type"] == "Student")
-              {%>
-            <div class="mainbar">
+                <%}%>
+                <%}
+                  else if (Request.Form["type"] == "Student") // student see his class his subjects
+                  {%>
                 <div class="article">
                     <h2><span>Class : 4-B</span></h2>
                     <div class="clr"></div>
@@ -47,11 +45,9 @@
                         <li><a href="subject.aspx">Math</a></li>
                     </ul>
                 </div>
-            </div>
-            <%}
-              else if (Request.Form["type"] == "Teacher")
-              {%>
-            <div class="mainbar">
+                <%}
+                  else if (Request.Form["type"] == "Teacher") // teacher see his subjects his classes
+                  {%>
                 <div class="article">
                     <h2><span>Subject: Math</span></h2>
                     <div class="clr"></div>
@@ -66,9 +62,9 @@
                     <p><a href="subject.aspx?type=Teacher">Class: 3B</a></p>
                     <p><a href="subject.aspx?type=Teacher">Class: 4A</a></p>
                 </div>
-            </div>
 
-            <%} %>
+                <%} %>
+            </div>
             <div class="sidebar">
                 <div class="search">
                     <form id="form" name="form" method="post" action="#">
