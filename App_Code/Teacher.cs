@@ -35,4 +35,9 @@ public class Teacher : User
         classes.Add(new Tuple<Subject, List<ClassRoom>>(s1, subjectClasses));
         return classes;
     }
+
+    public List<List<string>> getSchedule()
+    {
+        return null;
+    }
 }

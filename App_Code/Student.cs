@@ -36,4 +36,9 @@ public class Student : User
         ClassRoom c1 = new ClassRoom(1, l1);
         return c1;
     }
+
+    public List<List<string>> getSchedule()
+    {
+        return null;
+    }
 }

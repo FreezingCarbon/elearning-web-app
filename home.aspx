@@ -6,7 +6,7 @@
         <ul>
             <li><a href="home.aspx">Home</a></li>
             <li><a href="schedule.aspx">Schedule</a></li>
-                        <li><a href="Messages.aspx">Messages</a></li>
+            <li><a href="Messages.aspx">Messages</a></li>
 
             <li><a href="user.aspx">Ahmed</a></li>
             <li><a href="logout.aspx">Logout</a></li>
@@ -26,7 +26,7 @@
         Teacher tempTeacher = new Teacher(2, "username", "password", "name", "mail", DateTime.UtcNow);
         Session.Add("userType", "teacher");
         Session.Add("user", tempTeacher);
-         %>
+    %>
 
     <div class="content">
         <div class="content_resize">
@@ -55,9 +55,9 @@
                     <ul>
                         <%foreach (Subject subject in classRoom.getSubjects())
                           {%>
-                             <li><a href="subject.aspx"><%=subject.title%></a></li> 
-                          <%}
-                             %>
+                        <li><a href="subject.aspx"><%=subject.title%></a></li>
+                        <%}
+                        %>
                     </ul>
                 </div>
                 <%}
@@ -70,18 +70,18 @@
                     <div class="clr"></div>
                     <%foreach (ClassRoom classRoom in subjectClasses.Item2)
                       {%>
-                    <p><a href="class.aspx">Class <%=classRoom.classRoomID%></a></p>
+                    <p><a href="subject.aspx">Class <%=classRoom.classRoomID%></a></p>
                     <%}%>
                 </div>
                 <%}
-                  } 
+                  }
                   else
                   {%>
-                      <div class="article">
+                <div class="article">
                     <h2><span>Please log in.</span></h2>
                     <div class="clr"></div>
                 </div>
-                  <%}%>
+                <%}%>
             </div>
             <div class="sidebar">
                 <div class="search">
