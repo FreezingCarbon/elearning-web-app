@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage1.master" AutoEventWireup="true" CodeFile="user.aspx.cs" Inherits="user" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Stylesheets" runat="server">
+    <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </asp:Content>
 
 
@@ -9,7 +11,9 @@
     <div class="menu_nav">
         <ul>
             <li><a href="home.aspx">Home</a></li>
-            <li><a href="schedule.aspx">My Schedule</a></li>
+            <li><a href="schedule.aspx">Schedule</a></li>
+                        <li><a href="Messages.aspx">Messages</a></li>
+
             <li><a href="user.aspx">User1234</a></li>
             <li><a href="logout.aspx">Logout</a></li>
         </ul>
@@ -53,16 +57,31 @@
                     <h2></h2>
                     <div class="clr"></div>
                     <ul class="sb_menu">
-                        <li><a href="#">My Schedule</a></li>
-                        <li><a href="#">Edit Profile</a></li>
-                        <li><a href="#">Inbox</a></li>
-                        <li><a href="#">Sent Messages</a></li>
-                        <li><a href="#">Deleted Messages</a></li>
+                        
+                        <li><a data-toggle="modal" href="#update_modal" class="btn">Edit Profile</a></li>
                     </ul>
                 </div>
             </div>
             <div class="clr"></div>
         </div>
+        <div id="update_modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Update Profile</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </asp:Content>
 
