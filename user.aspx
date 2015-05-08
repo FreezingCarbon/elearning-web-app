@@ -12,7 +12,7 @@
         <ul>
             <li><a href="home.aspx">Home</a></li>
             <li><a href="schedule.aspx">Schedule</a></li>
-                        <li><a href="Messages.aspx">Messages</a></li>
+            <li><a href="Messages.aspx">Messages</a></li>
 
             <li><a href="user.aspx">User1234</a></li>
             <li><a href="logout.aspx">Logout</a></li>
@@ -27,37 +27,22 @@
             <div class="mainbar">
                 <div class="article">
 
-                    <table style="width: 100%;">
-                        <tr>
-                            <td style="width: 90px">Username:</td>
-                            <td>User1234</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 90px">Name:</td>
-                            <td>Mahmoud Mohsen</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 90px">Mail:</td>
-                            <td>mahmoud@gmail.com</td>
-                        </tr>
-                    </table>
+                    <ul class="list-group">
+  <li class="list-group-item">Username: ASD232</li>
+  <li class="list-group-item">Name: Mahmoud Mohsen</li>
+  <li class="list-group-item">E-mail: Mohsen@Moh.com</li>
+</ul>
+
 
                 </div>
             </div>
             <div class="sidebar">
-                <div class="search">
-                    <form id="form" name="form" method="post" action="#">
-                        <span>
-                            <input name="q" type="text" class="keywords" id="textfield" maxlength="50" value="Search..." />
-                            <input name="b" type="image" src="images/search.gif" class="button" />
-                        </span>
-                    </form>
-                </div>
+                
                 <div class="gadget">
                     <h2></h2>
                     <div class="clr"></div>
                     <ul class="sb_menu">
-                        
+
                         <li><a data-toggle="modal" href="#update_modal" class="btn">Edit Profile</a></li>
                     </ul>
                 </div>
@@ -65,14 +50,19 @@
             <div class="clr"></div>
         </div>
         <div id="update_modal" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Update Profile</h4>
                     </div>
                     <div class="modal-body">
-
+                        <form class="register" action="user.aspx" method="post">
+                            <input type="text" class="register-input" placeholder="Name" value="Mohsen" />
+                            <input type="text" class="register-input" placeholder="Username" value="user123" />
+                            <input type="text" class="register-input" placeholder="Email address" value="bohsen_Elshaba7@FCI.com"/>
+                            <input type="password" class="register-input" placeholder="Password" />
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

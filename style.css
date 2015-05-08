@@ -92,7 +92,7 @@ a.rm, a.com {
 .header_resize {
 	margin:0 auto;
 	padding:3px 0 0 0;
-	width:970px;
+	width:80%;
 }
 .header_img {
 	width:970px;
@@ -130,7 +130,7 @@ a.rm, a.com {
 	margin:40px 0 0 0;
 	padding:3px 0 0 10px;
 	float:right;
-	width:400px;
+	width:40%;
 }
 .menu_nav ul {
 	list-style:none;
@@ -201,7 +201,7 @@ a.rm, a.com {
 .content_resize {
 	margin:0 auto;
 	padding:20px 0 0 0;
-	width:970px;
+	width:80%;
 }
 .content .mainbar {
 	margin:0;
@@ -302,7 +302,7 @@ ul.ex_menu li a:hover {
 .fbg_resize {
 	margin:0 auto;
 	padding:20px 20px;
-	width:930px;
+	width:80%;
 }
 .fbg h2 {
 	color:#dedddd;
