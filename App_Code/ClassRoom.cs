@@ -32,7 +32,7 @@ public class ClassRoom
 
     public List<Subject> getSubjects()
     {
-        //static data
+        // static data
         Level l1 = new Level(1, "first grade");
         return l1.getSubjects();
     }

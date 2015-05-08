@@ -21,8 +21,9 @@
         Level tempLevel = new Level(1, "first grade");
         ClassRoom tempClassRoom = new ClassRoom(1, tempLevel);
         Student tempStudent = new Student(1, "username", "password", "name", "mail", DateTime.UtcNow, tempClassRoom);
-        Session.Add("userType", "student");
-        Session.Add("user", tempStudent);
+        Teacher tempTeacher = new Teacher(2, "username", "password", "name", "mail", DateTime.UtcNow);
+        Session.Add("userType", "teacher");
+        Session.Add("user", tempTeacher);
          %>
 
     <div class="content">
@@ -40,8 +41,8 @@
                     <p><a href="subject.aspx"><%=subject.title%></a></p>
                     <%}%>
                 </div>
-                <%}%>
                 <%}
+                  }
                   else if ((string)Session["userType"] == "student") // student see his class his subjects
                   {
                       ClassRoom classRoom = ((Student)Session["user"]).getClass(); %>
@@ -59,23 +60,26 @@
                 </div>
                 <%}
                   else if ((string)Session["userType"] == "teacher") // teacher see his subjects his classes
+                  {
+                      foreach (Tuple<Subject, List<ClassRoom>> subjectClasses in ((Teacher)Session["user"]).getSubjects())
+                      {%>
+                <div class="article">
+                    <h2><span><%=subjectClasses.Item1.title%></span></h2>
+                    <div class="clr"></div>
+                    <%foreach (ClassRoom classRoom in subjectClasses.Item2)
+                      {%>
+                    <p><a href="class.aspx">Class <%=classRoom.classRoomID%></a></p>
+                    <%}%>
+                </div>
+                <%}
+                  } 
+                  else
                   {%>
-                <div class="article">
-                    <h2><span>Subject: Math</span></h2>
+                      <div class="article">
+                    <h2><span>Please log in.</span></h2>
                     <div class="clr"></div>
-                    <p><a href="subject.aspx?type=Teacher">Class: 2A</a></p>
-                    <p><a href="subject.aspx?type=Teacher">Class: 2B</a></p>
-                    <p><a href="subject.aspx?type=Teacher">Class: 4A</a></p>
                 </div>
-                <div class="article">
-                    <h2><span>Subject: English</span></h2>
-                    <div class="clr"></div>
-                    <p><a href="subject.aspx?type=Teacher">Class: 2A</a></p>
-                    <p><a href="subject.aspx?type=Teacher">Class: 3B</a></p>
-                    <p><a href="subject.aspx?type=Teacher">Class: 4A</a></p>
-                </div>
-
-                <%} %>
+                  <%}%>
             </div>
             <div class="sidebar">
                 <div class="search">
