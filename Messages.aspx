@@ -32,17 +32,6 @@
 
                         </div>
 
-                        <div class="pull-right">
-                            <span class="text-muted"><b>1</b>–<b>50</b> of <b>277</b></span>
-                            <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                </button>
-                                <button type="button" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <hr />
@@ -59,15 +48,9 @@
                             <div class="tab-pane fade in active" id="inbox">
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox">
-                                            </label>
-                                        </div>
-                                        <span class="glyphicon glyphicon-star-empty"></span><span class="name" style="min-width: 120px; display: inline-block;">Bhaumik Patel</span> <span class="">This is big title</span>
-                                        <span class="text-muted" style="font-size: 11px;">- Hi hello how r u ?</span> 
-                                        <span class="badge">12:10 AM</span> 
-                                        <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>
+                                        <span class="name" style="min-width: 120px; display: inline-block;">Bhaumik Patel</span> <span class="">This is big title</span>
+                                        <span class="text-muted" style="font-size: 11px;">- Hi hello how r u ?</span>
+                                        <span class="badge">12:10 AM</span>
 
                                     </a>
                                 </div>
@@ -75,15 +58,9 @@
                             <div class="tab-pane fade in " id="sent">
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox">
-                                            </label>
-                                        </div>
-                                        <span class="glyphicon glyphicon-star-empty"></span><span class="name" style="min-width: 120px; display: inline-block;">Bhaumik Patel</span> <span class="">This is big title</span>
-                                        <span class="text-muted" style="font-size: 11px;">- Hi hello how r u ?</span> 
-                                        <span class="badge">12:10 AM</span> 
-                                        <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>
+                                        <span class="name" style="min-width: 120px; display: inline-block;">Bhaumik Patel</span> <span class="">This is big title</span>
+                                        <span class="text-muted" style="font-size: 11px;">- Hi hello how r u ?</span>
+                                        <span class="badge">12:10 AM</span>
 
                                     </a>
                                 </div>
@@ -95,14 +72,30 @@
 
         </div>
         <div id="send_modal" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Send Message</h4>
                     </div>
                     <div class="modal-body">
-
+                        <form class="form-inline">
+                            <div class="row">
+                                <div class="col-xs-5 form-group">
+                                    <label>To:</label>
+                                    <select class="form-control " size="14" name="to" multiple>
+                                        <option value="112">Amgad Mohamed Hussien</option>
+                                        <option value="113">Saab</option>
+                                        <option value="114">Opel</option>
+                                        <option value="115">Audi</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-7 form-group">
+                                    <label>Message:</label>
+                                    <textarea class="form-control" rows="11" cols="38"></textarea>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
