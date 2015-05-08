@@ -16,10 +16,19 @@
 <%-- Add content controls here --%>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
+    <%
+        // temp data for testing
+        Level tempLevel = new Level(1, "first grade");
+        ClassRoom tempClassRoom = new ClassRoom(1, tempLevel);
+        Student tempStudent = new Student(1, "username", "password", "name", "mail", DateTime.UtcNow, tempClassRoom);
+        Session.Add("userType", "student");
+        Session.Add("user", tempStudent);
+         %>
+
     <div class="content">
         <div class="content_resize">
             <div class="mainbar">
-                <%if (Request.Form["type"] == "Admin" || (true)) // admin see all levels all subjects
+                <%if ((string)Session["userType"] == "staff") // admin see all levels all subjects
                   {
                       foreach (Level level in Level.getAllLevels())
                       {%>
@@ -33,20 +42,23 @@
                 </div>
                 <%}%>
                 <%}
-                  else if (Request.Form["type"] == "Student") // student see his class his subjects
-                  {%>
+                  else if ((string)Session["userType"] == "student") // student see his class his subjects
+                  {
+                      ClassRoom classRoom = ((Student)Session["user"]).getClass(); %>
                 <div class="article">
-                    <h2><span>Class : 4-B</span></h2>
+                    <h2><span>Class <%=classRoom.classRoomID%></span></h2>
                     <div class="clr"></div>
                     <h3><span>Your Subjects:</span></h3>
                     <ul>
-                        <li><a href="subject.aspx">Arabic</a></li>
-                        <li><a href="subject.aspx">English</a></li>
-                        <li><a href="subject.aspx">Math</a></li>
+                        <%foreach (Subject subject in classRoom.getSubjects())
+                          {%>
+                             <li><a href="subject.aspx"><%=subject.title%></a></li> 
+                          <%}
+                             %>
                     </ul>
                 </div>
                 <%}
-                  else if (Request.Form["type"] == "Teacher") // teacher see his subjects his classes
+                  else if ((string)Session["userType"] == "teacher") // teacher see his subjects his classes
                   {%>
                 <div class="article">
                     <h2><span>Subject: Math</span></h2>
