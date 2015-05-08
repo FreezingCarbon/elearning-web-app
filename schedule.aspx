@@ -7,7 +7,9 @@
     <div class="menu_nav">
         <ul>
             <li><a href="home.aspx">Home</a></li>
-            <li><a href="schedule.aspx">My Schedule</a></li>
+            <li><a href="schedule.aspx">Schedule</a></li>
+                        <li><a href="Messages.aspx">Messages</a></li>
+
             <li><a href="user.aspx">Ahmed</a></li>
             <li><a href="logout.aspx">Logout</a></li>
         </ul>
