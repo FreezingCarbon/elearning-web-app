@@ -25,4 +25,11 @@ public class Subject
         this.title = title;
         this.levelID = level.levelID;
     }
+
+    private Subject(int subjectID, string title, int levelID)
+    {
+        this.subjectID = subjectID;
+        this.title = title;
+        this.levelID = levelID;
+    }
 }

@@ -17,13 +17,23 @@ public class Schedule
 
     }
 
-    public Schedule(int scheduleID, string day, DateTime start, DateTime end, ClassRoom classRomm, Subject subject)
+    public Schedule(int scheduleID, string day, DateTime start, DateTime end, ClassRoom classRoom, Subject subject)
     {
         this.scheduleID = scheduleID;
         this.day = day;
         this.start = start;
         this.end = end;
-        classRoomID = classRomm.classRoomID;
-        subjectID = subject.subjectID;
+        this.classRoomID = classRoom.classRoomID;
+        this.subjectID = subject.subjectID;
+    }
+
+    private Schedule(int scheduleID, string day, DateTime start, DateTime end, int classRoomID, int subjectID)
+    {
+        this.scheduleID = scheduleID;
+        this.day = day;
+        this.start = start;
+        this.end = end;
+        this.classRoomID = classRoomID;
+        this.subjectID = subjectID;
     }
 }

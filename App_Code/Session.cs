@@ -27,6 +27,15 @@ public class Session
         this.date = date;
         this.notesLink = notesLink;
         this.videoLink = videoLink;
-        scheduleID = schedule.scheduleID;
+        this.scheduleID = schedule.scheduleID;
+    }
+
+    private Session(int sessionID, DateTime date, string notesLink, string videoLink, int scheduleID)
+    {
+        this.sessionID = sessionID;
+        this.date = date;
+        this.notesLink = notesLink;
+        this.videoLink = videoLink;
+        this.scheduleID = scheduleID;
     }
 }

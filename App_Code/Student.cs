@@ -20,6 +20,20 @@ public class Student : User
     public Student(int userID, string username, string password, string name, string mail,
         DateTime lastSeen, ClassRoom classRoom) : base(userID, username, password, name, mail, lastSeen)
     {
-        classRoomID = classRoom.classRoomID;
+        this.classRoomID = classRoom.classRoomID;
+    }
+
+    private Student(int userID, string username, string password, string name, string mail,
+        DateTime lastSeen, int classRoomID) : base(userID, username, password, name, mail, lastSeen)
+    {
+        this.classRoomID = classRoomID;
+    }
+
+    public ClassRoom getClass()
+    {
+        // static data
+        Level l1 = new Level(1, "first grade");
+        ClassRoom c1 = new ClassRoom(1, l1);
+        return c1;
     }
 }
