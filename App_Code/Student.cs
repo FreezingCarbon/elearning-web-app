@@ -39,6 +39,16 @@ public class Student : User
 
     public List<List<string>> getSchedule()
     {
+        SqlConnection connection = DatabaseConnectionFactory.GetConnection();
+        string query = @"select Schedule.startTime, Schedule.sessionDay, Schedule.classId, Subject.title
+                        from Schedule
+	                        inner join Subject
+	                        on Schedule.subjectId = Subject.id
+                        where Schedule.classId = '" + this.classRoomID + @"'
+                        order by Schedule.startTime asc";
+
+
+        connection.Close();
         return null;
     }
 }
