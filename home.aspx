@@ -2,13 +2,16 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Stylesheets" runat="server"></asp:Content>
 <asp:Content ID="menu" ContentPlaceHolderID="ContentPlaceHolder3" runat="server">
+    <%
+        if(((User)Session["user"]) == null)
+            Response.Redirect("Default.aspx");
+         %>
     <div class="menu_nav">
         <ul>
-            <li><a href="home.aspx">Home</a></li>
             <li><a href="schedule.aspx">Schedule</a></li>
             <li><a href="Messages.aspx">Messages</a></li>
 
-            <li><a href="user.aspx">Ahmed</a></li>
+            <li><a href="user.aspx"><%=((User)Session["user"]).username %></a></li>
             <li><a href="logout.aspx">Logout</a></li>
         </ul>
         <div class="clr"></div>
@@ -20,12 +23,12 @@
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <%
         // temp data for testing
-        Level tempLevel = new Level(1, "first grade");
-        ClassRoom tempClassRoom = new ClassRoom(1, tempLevel);
-        Student tempStudent = new Student(1, "username", "password", "name", "mail", DateTime.UtcNow, tempClassRoom);
-        Teacher tempTeacher = new Teacher(2, "username", "password", "name", "mail", DateTime.UtcNow);
-        Session.Add("userType", "teacher");
-        Session.Add("user", tempTeacher);
+        //Level tempLevel = new Level(1, "first grade");
+        //ClassRoom tempClassRoom = new ClassRoom(1, tempLevel);
+        //Student tempStudent = new Student(1, "username", "password", "name", "mail", DateTime.UtcNow, tempClassRoom);
+        //Teacher tempTeacher = new Teacher(2, "username", "password", "name", "mail", DateTime.UtcNow);
+        //Session.Add("userType", "teacher");
+        //Session.Add("user", tempTeacher);
     %>
 
     <div class="content">
@@ -33,12 +36,12 @@
             <div class="mainbar">
                 <%if ((string)Session["userType"] == "staff") // admin see all levels all subjects
                   {
-                      foreach (Level level in Level.getAllLevels())
+                      foreach (Level level in Level.GetAllLevels())
                       {%>
                 <div class="article">
                     <h2><span><%=level.levelName%></span></h2>
                     <div class="clr"></div>
-                    <%foreach (Subject subject in level.getSubjects())
+                    <%foreach (Subject subject in level.GetSubjects())
                       {%>
                     <p><a href="subject.aspx"><%=subject.title%></a></p>
                     <%}%>
@@ -47,13 +50,13 @@
                   }
                   else if ((string)Session["userType"] == "student") // student see his class his subjects
                   {
-                      ClassRoom classRoom = ((Student)Session["user"]).getClass(); %>
+                      ClassRoom classRoom = ((Student)Session["user"]).GetClassRoom(); %>
                 <div class="article">
                     <h2><span>Class <%=classRoom.classRoomID%></span></h2>
                     <div class="clr"></div>
                     <h3><span>Your Subjects:</span></h3>
                     <ul>
-                        <%foreach (Subject subject in classRoom.getSubjects())
+                        <%foreach (Subject subject in classRoom.GetSubjects())
                           {%>
                         <li><a href="subject.aspx"><%=subject.title%></a></li>
                         <%}
@@ -63,7 +66,7 @@
                 <%}
                   else if ((string)Session["userType"] == "teacher") // teacher see his subjects his classes
                   {
-                      foreach (Tuple<Subject, List<ClassRoom>> subjectClasses in ((Teacher)Session["user"]).getSubjects())
+                      foreach (Tuple<Subject, List<ClassRoom>> subjectClasses in ((Teacher)Session["user"]).GetSubjects())
                       {%>
                 <div class="article">
                     <h2><span><%=subjectClasses.Item1.title%></span></h2>
@@ -76,12 +79,9 @@
                 <%}
                   }
                   else
-                  {%>
-                <div class="article">
-                    <h2><span>Please log in.</span></h2>
-                    <div class="clr"></div>
-                </div>
-                <%}%>
+                  {
+                      Response.Redirect("Default.aspx");
+                  }%>
             </div>
             <div class="sidebar">
                 <div class="search">

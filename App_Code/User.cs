@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-/// <summary>
-/// Summary description for User
-/// </summary>
-public class User
+public abstract class User
 {
     public int userID;
     public string username;
@@ -14,13 +11,6 @@ public class User
     public string name;
     public string mail;
     public DateTime lastSeen;
-
-	public User()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
 
     public User(int userID, string username, string password, string name, string mail, DateTime lastSeen)
     {
@@ -32,5 +22,6 @@ public class User
         this.lastSeen = lastSeen;
     }
 
+    public abstract List<List<string>> GetSchedule();
 
 }

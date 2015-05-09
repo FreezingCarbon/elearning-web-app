@@ -16,11 +16,14 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <%
-        List<List<string>> schedule;
+        List<List<string>> schedule = null;
         if ((string)Session["userType"] == "student")
-            schedule = ((Student)Session["user"]).getSchedule();
+            schedule = ((Student)Session["user"]).GetSchedule();
         else if ((string)Session["userType"] == "teacher")
-            schedule = ((Teacher)Session["user"]).getSchedule();
+            schedule = ((Teacher)Session["user"]).GetSchedule();
+        else if ((string)Session["userType"] == "staff")
+            schedule = ((Staff)Session["user"]).GetSchedule();
+        else Response.Redirect("Default.aspx");
     %>
     <table width="80%" align="center">
         <div id="head_nav">

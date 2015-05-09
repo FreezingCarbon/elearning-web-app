@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 public class Schedule
 {
@@ -11,11 +13,6 @@ public class Schedule
     public string day;
     public DateTime start;
     public DateTime end;
-
-    public Schedule()
-    {
-
-    }
 
     public Schedule(int scheduleID, string day, DateTime start, DateTime end, ClassRoom classRoom, Subject subject)
     {
@@ -35,5 +32,27 @@ public class Schedule
         this.end = end;
         this.classRoomID = classRoomID;
         this.subjectID = subjectID;
+    }
+
+    static public Schedule GetScheduleById(int scheduleId)
+    {
+        // todo
+        return null;
+    }
+
+    public void Insert()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "insert into Schedule values( " 
+                          + scheduleID + " , " 
+                          + classRoomID + " , " 
+                          + subjectID + " , '" 
+                          + day + "' , '" 
+                          + start.ToString() + "' , "
+                          + end.ToString() + "' )";
+        cmd.ExecuteNonQuery();
+        cmd.Connection.Close();
     }
 }

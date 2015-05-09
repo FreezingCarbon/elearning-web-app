@@ -5,25 +5,35 @@ using System.Web;
 using System.Data.Sql;
 using System.Data.SqlClient;
 
-/// <summary>
-/// Summary description for Teacher
-/// </summary>
 public class Teacher : User
 {
-	public Teacher()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
-
     public Teacher(int userID, string username, string password, string name, string mail,
-        DateTime lastSeen) : base(userID, username, password, name, mail, lastSeen)
-    {
+        DateTime lastSeen) : base(userID, username, password, name, mail, lastSeen) { }
 
+    static public Teacher GetUserById(int teacherId)
+    {
+        // todo
+        return null;
     }
 
-    public List<Tuple<Subject, List<ClassRoom>>> getSubjects()
+    public void Insert()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = @"insert into [User] values (" 
+                            + userID + ",'"
+                            + username + "','"
+                            + password + "','"
+                            + name + "','"
+                            + mail + "','"
+                            + lastSeen.ToString() 
+                            + "','teacher',0,null,null)";
+        cmd.ExecuteNonQuery();
+        cmd.Connection.Close();
+    }
+
+    public List<Tuple<Subject, List<ClassRoom>>> GetSubjects()
     {
         // static data
         Level l1 = new Level(1, "first grade");
@@ -38,7 +48,7 @@ public class Teacher : User
         return classes;
     }
 
-    public List<List<string>> getSchedule()
+    public override List<List<string>> GetSchedule()
     {
         SqlConnection connection = DatabaseConnectionFactory.GetConnection();
         string query = @"select Schedule.startTime, Schedule.sessionDay, Schedule.classId, Subject.title

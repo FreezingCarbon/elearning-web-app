@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
-/// <summary>
-/// Summary description for Session
-/// </summary>
 public class Session
 {
     public int sessionID;
@@ -13,13 +12,6 @@ public class Session
     public DateTime date;
     public string notesLink;
     public string videoLink;
-
-	public Session()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
 
     public Session(int sessionID, DateTime date, string notesLink, string videoLink, Schedule schedule)
     {
@@ -37,5 +29,11 @@ public class Session
         this.notesLink = notesLink;
         this.videoLink = videoLink;
         this.scheduleID = scheduleID;
+    }
+
+    static public Session GetSessionById(int sessionId)
+    {
+        // todo
+        return null;
     }
 }
