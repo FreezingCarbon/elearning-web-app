@@ -4,13 +4,6 @@
     <link href="timetablestyle.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
-    <%
-        List<List<string>> schedule;
-        if ((string)Session["userType"] == "student")
-            schedule = ((Student)Session["user"]).getSchedule();
-        else if ((string)Session["userType"] == "teacher")
-            schedule = ((Teacher)Session["user"]).getSchedule();
-    %>
     <div class="menu_nav">
         <ul>
             <li><a href="home.aspx">Home</a></li>
@@ -22,7 +15,13 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
+    <%
+        List<List<string>> schedule;
+        if ((string)Session["userType"] == "student")
+            schedule = ((Student)Session["user"]).getSchedule();
+        else if ((string)Session["userType"] == "teacher")
+            schedule = ((Teacher)Session["user"]).getSchedule();
+    %>
     <table width="80%" align="center">
         <div id="head_nav">
             <tr>
