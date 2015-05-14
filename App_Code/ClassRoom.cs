@@ -2,21 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
-/// <summary>
-/// Summary description for ClassRoom
-/// </summary>
 public class ClassRoom
 {
     public int classRoomID;
     public int levelID;
-
-	public ClassRoom()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
 
     public ClassRoom(int classRoomID, Level level)
     {
@@ -30,10 +22,29 @@ public class ClassRoom
         this.levelID = levelID;
     }
 
-    public List<Subject> getSubjects()
+    static public ClassRoom GetClassRoomById(int classRoomID)
     {
-        // static data
-        Level l1 = new Level(1, "first grade");
-        return l1.getSubjects();
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select levelId from Class where id = " + classRoomID;
+        SqlDataReader dr = cmd.ExecuteReader();
+        int levelId = Convert.ToInt32(dr.GetValue(0));
+        return new ClassRoom(classRoomID, levelId);
+    }
+
+    public void Insert()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "insert into Class values( " + classRoomID + " , " + levelID + " )";
+        cmd.ExecuteNonQuery();
+        cmd.Connection.Close();
+    }
+
+    public List<Subject> GetSubjects()
+    {
+        return Level.GetLevelById(levelID).GetSubjects();
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 public class Message
 {
@@ -11,11 +13,6 @@ public class Message
     public string subject;
     public string body;
     public DateTime time;
-
-    public Message()
-    {
-
-    }
 
     public Message(int messageID, string subject, string body, DateTime time, User sender, User reciever)
     {
@@ -36,4 +33,11 @@ public class Message
         this.senderID = senderID;
         this.recieverID = recieverID;
     }
+
+    static public Message GetMessageById(int messageId)
+    {
+        // todo
+        return null;
+    }
+
 }

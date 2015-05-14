@@ -2,27 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 
 /// <summary>
 /// Summary description for Student
 /// </summary>
-
-using System.Data.SqlClient;public class Student : User
+public class Student : User
 {
     public int classRoomID;
-
-	public Student()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
 
     public Student(int userID, string username, string password, string name, string mail,
         DateTime lastSeen, ClassRoom classRoom) : base(userID, username, password, name, mail, lastSeen)
     {
-        this.classRoomID = classRoom.classRoomID;
+        if (classRoom != null)
+            this.classRoomID = classRoom.classRoomID;
+        else this.classRoomID = -1;
     }
 
     private Student(int userID, string username, string password, string name, string mail,
@@ -31,15 +27,36 @@ using System.Data.SqlClient;public class Student : User
         this.classRoomID = classRoomID;
     }
 
-    public ClassRoom getClass()
+    static public Student GetUserById(int studentId)
     {
-        // static data
-        Level l1 = new Level(1, "first grade");
-        ClassRoom c1 = new ClassRoom(1, l1);
-        return c1;
+        // todo
+        return null;
     }
 
-    public List<List<string>> getSchedule()
+    public void Insert()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "insert into [User] values ( " 
+                          + userID + " , '" 
+                          + username + "','" 
+                          + password + "','" 
+                          + name + "','" 
+                          + mail + "' , '" 
+                          + lastSeen.ToString() 
+                          + "','student', 0 , "
+                          + ((classRoomID == -1) ? "null" : classRoomID.ToString()) + " ,0 )";
+        cmd.ExecuteNonQuery();
+        cmd.Connection.Close();
+    }
+
+    public ClassRoom GetClassRoom()
+    {
+        return ClassRoom.GetClassRoomById(classRoomID);
+    }
+
+    public override List<List<string>> GetSchedule()
     {
         SqlConnection connection = DatabaseConnectionFactory.GetConnection();
         string query = @"select Schedule.startTime, Schedule.sessionDay, Schedule.classId, Subject.title
