@@ -9,7 +9,7 @@ public class Message
 {
     public int messageID;
     public int senderID;
-    public int recieverID;
+    public List<int> recieverIDs=new List<int>();
     public string subject;
     public string body;
     public DateTime time;
@@ -21,7 +21,7 @@ public class Message
         this.body = body;
         this.time = time;
         this.senderID = sender.userID;
-        this.recieverID = reciever.userID;
+        this.recieverIDs.Add (reciever.userID);
     }
 
     private Message(int messageID, string subject, string body, DateTime time, int senderID, int recieverID)
@@ -31,13 +31,28 @@ public class Message
         this.body = body;
         this.time = time;
         this.senderID = senderID;
-        this.recieverID = recieverID;
+        this.recieverIDs.Add(recieverID);
     }
-
-    static public Message GetMessageById(int messageId)
+    private Message(string subject, string body, DateTime time, int senderID)
+    {
+        this.subject = subject;
+        this.body = body;
+        this.time = time;
+        this.senderID = senderID;
+    }
+    public int sendMessage()
+    {
+        // todo
+        return messageID;
+    }
+    static public List<Message> GetMessagesBySenderId(int senderID)
     {
         // todo
         return null;
     }
-
+    static public List<Message> GetMessagesByRecieverId(int recieverID)
+    {
+        // todo
+        return null;
+    }
 }
