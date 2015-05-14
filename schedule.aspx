@@ -16,7 +16,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <%
-        List<List<string>> schedule;
+        List<List<string>> schedule = null;
         if ((string)Session["userType"] == "student")
             schedule = ((Student)Session["user"]).getSchedule();
         else if ((string)Session["userType"] == "teacher")

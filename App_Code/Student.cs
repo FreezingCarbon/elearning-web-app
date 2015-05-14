@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
 /// <summary>
 /// Summary description for Student
 /// </summary>
-public class Student : User
+
+using System.Data.SqlClient;public class Student : User
 {
     public int classRoomID;
 
