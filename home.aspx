@@ -5,9 +5,9 @@
     
     <div class="menu_nav">
         <ul>
+            <li><a href="home.aspx">Home</a></li>
             <li><a href="schedule.aspx">Schedule</a></li>
             <li><a href="Messages.aspx">Messages</a></li>
-
             <li><a href="user.aspx"><%=((ELearn.User)Session["user"]).username %></a></li>
             <li><a href="logout.aspx">Logout</a></li>
         </ul>
@@ -46,7 +46,7 @@
                 <%}
                   }
                   else if (((string)Session["userType"]).Equals("student")) // student see his class his subjects
-                  {/*
+                  {
                       ClassRoom classRoom = ((Student)Session["user"]).GetClassRoom(); %>
                 <div class="article">
                     <h2><span>Class <%=classRoom.classRoomID%></span></h2>
@@ -60,7 +60,7 @@
                         %>
                     </ul>
                 </div>
-                <%*/}
+                <%}
                   else if ((string)Session["userType"] == "teacher") // teacher see his subjects his classes
                   {
                       foreach (Tuple<Subject, List<ClassRoom>> subjectClasses in ((Teacher)Session["user"]).GetSubjects())
@@ -80,16 +80,7 @@
                       Response.Redirect("Default.aspx");
                   }%>
             </div>
-            <div class="sidebar">
-                <div class="search">
-                    <form id="form" name="form" method="post" action="#">
-                        <span>
-                            <input name="q" type="text" class="keywords" id="textfield" maxlength="50" value="Search..." />
-                            <input name="b" type="image" src="images/search.gif" class="button" />
-                        </span>
-                    </form>
-                </div>
-            </div>
+            
             <div class="clr"></div>
         </div>
     </div>

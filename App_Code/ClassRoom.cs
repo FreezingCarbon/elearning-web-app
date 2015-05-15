@@ -22,6 +22,34 @@ public class ClassRoom
         this.classRoomID = classRoomID;
         this.levelID = levelID;
     }
+    static public List<Student> GetAllStudentInClassRooms(int classID)
+    {
+        List<Student> students = new List<Student>();
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from [User] where classID ="+classID.ToString();
+        SqlDataReader dr = cmd.ExecuteReader();
+        while (dr.Read())
+        {
+            students.Add( new Student(Convert.ToInt32(dr["id"]), dr["userName"].ToString(), "", dr["name"].ToString(), dr["mail"].ToString(), Convert.ToDateTime(dr["lastSeen"]), Convert.ToInt32(dr["classID"])));
+        }
+        return students;
+    }
+    static public List<Teacher> getClassroomTeachers(int classID) {
+        List<Teacher> teachers = new List<Teacher>();
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from( [User] inner join Teaches on teacherID=id) where Teaches.classID = " + classID.ToString();
+        SqlDataReader dr = cmd.ExecuteReader();
+        while (dr.Read())
+        {
+            teachers.Add(new Teacher(Convert.ToInt32(dr["id"]), dr["userName"].ToString(), "", dr["name"].ToString(), dr["mail"].ToString(), Convert.ToDateTime(dr["lastSeen"])));
+        }
+        return teachers;
+    
+    }
     static public List<ClassRoom> GetAllClassRooms()
     {
         List<ClassRoom> classes = new List<ClassRoom>();

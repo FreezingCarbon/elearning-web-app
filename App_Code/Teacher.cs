@@ -140,4 +140,19 @@ public class Teacher : ELearn.User
         cmd.Connection.Close();
         return schedule;
     }
+    static public List<Teacher> getAllTeachers()
+    {
+        List<Teacher> teachers = new List<Teacher>();
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from [User] userType = 'teacher'";
+        SqlDataReader dr = cmd.ExecuteReader();
+        while (dr.Read())
+        {
+            teachers.Add(new Teacher(Convert.ToInt32(dr["id"]), dr["userName"].ToString(), "", dr["name"].ToString(), dr["mail"].ToString(), Convert.ToDateTime(dr["lastSeen"])));
+        }
+        return teachers;
+
+    }
 }
