@@ -28,13 +28,13 @@ public class Staff : ELearn.User
             if (!dataReader.GetValue(6).ToString().Equals("staff"))
                 throw new Exception("the user with the specified id is not a staff");
 
-            staff = new Staff(Convert.ToInt32(dataReader.GetValue(0)),
-                              dataReader.GetValue(1).ToString(),
-                              dataReader.GetValue(2).ToString(),
-                              dataReader.GetValue(3).ToString(),
-                              dataReader.GetValue(4).ToString(),
-                              Convert.ToDateTime(dataReader.GetValue(5)),
-                              Convert.ToBoolean(dataReader.GetValue(7)));
+            staff = new Staff(dataReader.GetInt32(0),
+                              dataReader.GetString(1),
+                              dataReader.GetString(2),
+                              dataReader.GetString(3),
+                              dataReader.GetString(4),
+                              dataReader.GetDateTime(5),
+                              dataReader.GetBoolean(7));
         }
         cmd.Connection.Close();
         return staff;

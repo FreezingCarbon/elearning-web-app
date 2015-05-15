@@ -25,8 +25,8 @@ public class Level
         SqlDataReader dataReader = cmd.ExecuteReader();
         Level level = null;
         if (dataReader.Read())
-            level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
-                              dataReader.GetValue(1).ToString());
+            level = new Level(dataReader.GetInt32(0),
+                              dataReader.GetString(1));
         cmd.Connection.Close();
         return level;
     }
@@ -41,8 +41,8 @@ public class Level
         List<Level> allLevels = new List<Level>();
         while (dataReader.Read())
         {
-            Level level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
-                                    dataReader.GetValue(1).ToString());
+            Level level = new Level(dataReader.GetInt32(0),
+                                    dataReader.GetString(1));
             allLevels.Add(level);
         }
         cmd.Connection.Close();
@@ -60,8 +60,8 @@ public class Level
         List<Subject> subjects = new List<Subject>();
         while (dataReader.Read())
         {
-            Subject subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
-                                          dataReader.GetValue(2).ToString(),
+            Subject subject = new Subject(dataReader.GetInt32(0),
+                                          dataReader.GetString(2),
                                           levelID);
             subjects.Add(subject);
         }
