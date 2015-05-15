@@ -23,7 +23,6 @@ public class Message
         this.senderID = sender.userID;
         this.recieverIDs.Add (reciever.userID);
     }
-
     public Message(int messageID, string subject, string body, DateTime time, int senderID, int recieverID)
     {
         this.messageID = messageID;
@@ -50,7 +49,13 @@ public class Message
     }
     public int sendMessage()
     {
-        // todo
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "insert into Message values( " + messageID + " , " + senderID + " , '" + subject + "' , '" + body + "' , " + time + "  )";
+        cmd.ExecuteNonQuery();
+        con.Close();
+
         return messageID;
     }
     static public List<Message> GetMessagesBySenderId(int senderID)
@@ -85,6 +90,26 @@ public class Message
 
     static public List<Message> GetMessagesByRecieverId(int recieverID)
     {
-        return null;
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select messageID from Recieve where recipientID = " + recieverID;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        List<Message> messages = new List<Message>();
+        while(dataReader.Read()){
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.Connection = con;
+            cmd2.CommandText = "select * from Message where messageID = " + Convert.ToInt32(dataReader.GetValue(1));
+            SqlDataReader dataReader2 = cmd2.ExecuteReader();
+
+            Message mess = new Message(dataReader2.GetValue(2).ToString(),
+                                          dataReader2.GetValue(3).ToString(),
+                                          Convert.ToDateTime(dataReader2.GetValue(4)),
+                                          Convert.ToInt32(dataReader2.GetValue(1)));
+            
+            messages.Add(mess);
+        }
+        con.Close();
+        return messages;
     }
 }
