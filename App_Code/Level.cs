@@ -18,8 +18,16 @@ public class Level
 
     static public Level GetLevelById(int levelId)
     {
-        // todo
-        return null;
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from Level where id = " + levelId;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        dataReader.Read();
+        Level level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
+                                dataReader.GetValue(1).ToString());
+        cmd.Connection.Close();
+        return level;
     }
 
     static public List<Level> GetAllLevels()
@@ -32,7 +40,8 @@ public class Level
         List<Level> allLevels = new List<Level>();
         while (dataReader.Read())
         {
-            Level level = new Level(Convert.ToInt32(dataReader.GetValue(0)), dataReader.GetValue(1).ToString());
+            Level level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
+                                    dataReader.GetValue(1).ToString());
             allLevels.Add(level);
         }
         cmd.Connection.Close();
@@ -40,7 +49,7 @@ public class Level
         return allLevels;
     }
 
-    public List<Subject> GetSubjects()
+    static public List<Subject> GetSubjects(int levelID)
     {
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
@@ -50,7 +59,9 @@ public class Level
         List<Subject> subjects = new List<Subject>();
         while (dataReader.Read())
         {
-            Subject subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)), dataReader.GetValue(2).ToString(), this);
+            Subject subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
+                                          dataReader.GetValue(2).ToString(),
+                                          levelID);
             subjects.Add(subject);
         }
         cmd.Connection.Close();

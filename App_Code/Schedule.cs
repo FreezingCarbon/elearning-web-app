@@ -36,8 +36,21 @@ public class Schedule
 
     static public Schedule GetScheduleById(int scheduleId)
     {
-        // todo
-        return null;
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from Schedule where  id = " + scheduleId;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        dataReader.Read();
+
+        Schedule schedule = new Schedule(Convert.ToInt32(dataReader.GetValue(0)),
+                                         dataReader.GetValue(3).ToString(),
+                                         Convert.ToDateTime(dataReader.GetValue(4)),
+                                         Convert.ToDateTime(dataReader.GetValue(5)),
+                                         Convert.ToInt32(dataReader.GetValue(2)),
+                                         Convert.ToInt32(dataReader.GetValue(1)));
+        cmd.Connection.Close();
+        return schedule;
     }
 
     public void Insert()

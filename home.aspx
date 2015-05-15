@@ -41,7 +41,7 @@
                 <div class="article">
                     <h2><span><%=level.levelName%></span></h2>
                     <div class="clr"></div>
-                    <%foreach (Subject subject in level.GetSubjects())
+                    <%foreach (Subject subject in Level.GetSubjects(level.levelID))
                       {%>
                     <p><a href="subject.aspx"><%=subject.title%></a></p>
                     <%}%>

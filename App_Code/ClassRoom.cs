@@ -45,6 +45,22 @@ public class ClassRoom
 
     public List<Subject> GetSubjects()
     {
-        return Level.GetLevelById(levelID).GetSubjects();
+        return Level.GetSubjects(levelID);
+    }
+
+    public static List<List<string>> GetSchedule(int classRoomID)
+    {
+        SqlConnection connection = DatabaseConnectionFactory.GetConnection();
+        string query = @"select Schedule.startTime, Schedule.sessionDay, Schedule.classId, Subject.title
+                        from Schedule
+	                        inner join Subject
+	                        on Schedule.subjectId = Subject.id
+                        where Schedule.classId = " + classRoomID + @"
+                        order by Schedule.startTime asc";
+
+
+        connection.Close();
+
+        return null;
     }
 }

@@ -55,12 +55,36 @@ public class Message
     }
     static public List<Message> GetMessagesBySenderId(int senderID)
     {
-        // todo
-        return null;
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from Message where senderId = " + senderID;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        List<Message> messages = new List<Message>();
+        while (dataReader.Read())
+        {
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.Connection = con;
+            cmd2.CommandText = "select recipientId from receive where messageId = " + dataReader.GetValue(0).ToString();
+            SqlDataReader dataReader2 = cmd.ExecuteReader();
+            List<int> recieverIDs = new List<int>();
+            while (dataReader2.Read())
+                recieverIDs.Add(Convert.ToInt32(dataReader2.GetValue(0)));
+
+            Message message = new Message(dataReader.GetValue(2).ToString(),
+                                          dataReader.GetValue(3).ToString(),
+                                          Convert.ToDateTime(dataReader.GetValue(4)),
+                                          Convert.ToInt32(dataReader.GetValue(1)),
+                                          recieverIDs);
+            message.messageID = Convert.ToInt32(dataReader.GetValue(0));
+            messages.Add(message);
+        }
+        cmd.Connection.Close();
+        return messages;
     }
+
     static public List<Message> GetMessagesByRecieverId(int recieverID)
     {
-        // todo
         return null;
     }
 }

@@ -18,7 +18,7 @@ public class Subject
         this.levelID = level.levelID;
     }
 
-    private Subject(int subjectID, string title, int levelID)
+    public Subject(int subjectID, string title, int levelID)
     {
         this.subjectID = subjectID;
         this.title = title;
@@ -27,8 +27,17 @@ public class Subject
 
     static public Subject GetSubjectById(int subjectId)
     {
-        // todo
-        return null;
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from Subject where id = " + subjectId;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        dataReader.Read();
+        Subject subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
+                                      dataReader.GetValue(2).ToString(),
+                                      Convert.ToInt32(dataReader.GetValue(1)));
+        cmd.Connection.Close();
+        return subject;
     }
 
     void Insert()
