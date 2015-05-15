@@ -102,10 +102,10 @@ public class Message
             cmd2.CommandText = "select * from Message where messageID = " + Convert.ToInt32(dataReader.GetValue(1));
             SqlDataReader dataReader2 = cmd2.ExecuteReader();
 
-            Message mess = new Message(dataReader2.GetValue(2).ToString(),
-                                          dataReader2.GetValue(3).ToString(),
-                                          Convert.ToDateTime(dataReader2.GetValue(4)),
-                                          Convert.ToInt32(dataReader2.GetValue(1)));
+            Message mess = new Message(dataReader2.GetString(2),
+                                       dataReader2.GetString(3),
+                                       dataReader2.GetDateTime(4),
+                                       dataReader2.GetInt32(1));
             
             messages.Add(mess);
         }
