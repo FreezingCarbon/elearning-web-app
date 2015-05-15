@@ -5,7 +5,7 @@ using System.Web;
 using System.Data.Sql;
 using System.Data.SqlClient;
 
-public class Staff : User
+public class Staff : ELearn.User
 {
     public bool isAdmin;
 

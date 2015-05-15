@@ -14,7 +14,7 @@ public class Message
     public string body;
     public DateTime time;
 
-    public Message(int messageID, string subject, string body, DateTime time, User sender, User reciever)
+    public Message(int messageID, string subject, string body, DateTime time, ELearn.User sender, ELearn.User reciever)
     {
         this.messageID = messageID;
         this.subject = subject;

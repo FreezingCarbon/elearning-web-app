@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 /// <summary>
 /// Summary description for Student
 /// </summary>
-public class Student : User
+public class Student : ELearn.User
 {
     public int classRoomID;
 
@@ -21,7 +21,7 @@ public class Student : User
         else this.classRoomID = -1;
     }
 
-    private Student(int userID, string username, string password, string name, string mail,
+    public Student(int userID, string username, string password, string name, string mail,
         DateTime lastSeen, int classRoomID) : base(userID, username, password, name, mail, lastSeen)
     {
         this.classRoomID = classRoomID;

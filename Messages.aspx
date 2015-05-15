@@ -46,7 +46,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="inbox">
                                 <div class="list-group">
-                                    <% List<Message> msgs = Message.GetMessagesByRecieverId(((User)Session["user"]).userID);
+                                    <% List<Message> msgs = Message.GetMessagesByRecieverId(((ELearn.User)Session["user"]).userID);
                                        foreach (Message msg in msgs)
                                        { 
                                     %>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="tab-pane fade in " id="sent">
                                 <div class="list-group">
-                                    <% msgs = Message.GetMessagesBySenderId(((User)Session["user"]).userID);
+                                    <% msgs = Message.GetMessagesBySenderId(((ELearn.User)Session["user"]).userID);
                                        foreach (Message msg in msgs)
                                        { 
                                     %>

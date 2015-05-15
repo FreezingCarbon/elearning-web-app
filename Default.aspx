@@ -23,11 +23,12 @@
 
             <div class="col-lg-5 ">
                 <h1 class="register-title">Login</h1>
-                <form class="register" action="home.aspx" method="post">
-                    <input type="text" class="register-input" placeholder="Email address" />
-                    <input type="password" class="register-input" placeholder="Password" />
-                    <input type="text" hidden="true" name="type" value="Student" />
-                    <input type="submit" value="Login" class="register-button" />
+                <form  runat="server" class="register" method="post">
+                    
+                    <asp:TextBox id="userName_login" runat="server" class="register-input" placeholder="Username" />
+                    <asp:TextBox id="passwordLogin" runat="server"  TextMode="Password" class="register-input" placeholder="Password" />
+                    <asp:Button runat="server" ID="LoginButton" Text="Login" CssClass="register-button" OnClick="LoginButton_Click" />
+
                 </form>
 
             </div>
