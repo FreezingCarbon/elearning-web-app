@@ -29,12 +29,12 @@ public class ClassRoom
         cmd.Connection = con;
         cmd.CommandText = "select levelId from Class where id = " + classRoomID;
         SqlDataReader dr = cmd.ExecuteReader();
+        ClassRoom classRoom = null;
         if (dr.Read())
-        {
-            int levelId = Convert.ToInt32(dr.GetValue(0));
-            return new ClassRoom(classRoomID, levelId);
-        } 
-        return null;
+            classRoom = new ClassRoom(classRoomID,
+                                      Convert.ToInt32(dr.GetValue(0)));
+        cmd.Connection.Close();
+        return classRoom;
     }
 
     public void Insert()
@@ -49,6 +49,22 @@ public class ClassRoom
 
     public List<Subject> GetSubjects()
     {
-        return Level.GetLevelById(levelID).GetSubjects();
+        return Level.GetSubjects(levelID);
+    }
+
+    public static List<List<string>> GetSchedule(int classRoomID)
+    {
+        SqlConnection connection = DatabaseConnectionFactory.GetConnection();
+        string query = @"select Schedule.startTime, Schedule.sessionDay, Schedule.classId, Subject.title
+                        from Schedule
+	                        inner join Subject
+	                        on Schedule.subjectId = Subject.id
+                        where Schedule.classId = " + classRoomID + @"
+                        order by Schedule.startTime asc";
+
+
+        connection.Close();
+
+        return null;
     }
 }

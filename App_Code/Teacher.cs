@@ -12,8 +12,26 @@ public class Teacher : ELearn.User
 
     static public Teacher GetUserById(int teacherId)
     {
-        // todo
-        return null;
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from [User] where  id = " + teacherId;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        Teacher teacher = null;
+        if (dataReader.Read())
+        {
+            if (!dataReader.GetValue(6).ToString().Equals("teacher"))
+                throw new Exception("the user with the specified id is not a teacher");
+
+            teacher = new Teacher(Convert.ToInt32(dataReader.GetValue(0)),
+                                  dataReader.GetValue(1).ToString(),
+                                  dataReader.GetValue(2).ToString(),
+                                  dataReader.GetValue(3).ToString(),
+                                  dataReader.GetValue(4).ToString(),
+                                  Convert.ToDateTime(dataReader.GetValue(5)));
+        }
+        cmd.Connection.Close();
+        return teacher;
     }
 
     public void Insert()
@@ -54,7 +72,7 @@ public class Teacher : ELearn.User
         string query = @"select Schedule.startTime, Schedule.sessionDay, Schedule.classId, Subject.title
                         from (
 		                        select Teaches.subjectId, Teaches.classId
-		                        from Teaches where Teaches.teacherId = '" + this.userID + @"'
+		                        from Teaches where Teaches.teacherId = " + this.userID + @"
 	                        ) as teacherAssignments
 	                        inner join Schedule
 		                        on Schedule.classId = teacherAssignments.classId
