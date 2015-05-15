@@ -9,29 +9,35 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="container">
         <div class="row">
-            <div class="col-lg-5 col-md-offset-1">
-                <h1 class="register-title">SignUp</h1>
-                <form class="register" action="home.aspx" method="post">
-                    <input type="text" class="register-input" placeholder="Name" />
-                    <input type="text" class="register-input" placeholder="Username" />
-                    <input type="text" class="register-input" placeholder="Email address" />
-                    <input type="password" class="register-input" placeholder="Password" />
-                    <input type="submit" value="Create Account" class="register-button" />
-                </form>
+            <form runat="server" >
+                <div class="col-lg-5 col-md-offset-1">
+                    <h1 class="register-title">SignUp</h1>
+                    <div class="register">
+                    <asp:TextBox ID="RegName" runat="server" class="register-input" placeholder="Name" />
+                    <asp:TextBox ID="RegUser" runat="server" class="register-input" placeholder="Username" />
+                    <asp:TextBox ID="RegMail" runat="server" class="register-input" placeholder="E-Mail" />
+                    <asp:TextBox ID="RegPass" runat="server" TextMode="Password" class="register-input" placeholder="Password" />
+                    <asp:ListBox ID="ListBox1" CssClass="register-input" runat="server">
+                        <asp:ListItem Value="-1" Text="None" Selected="True"></asp:ListItem>
+                    </asp:ListBox>
+                    <asp:Label ID="RegisError" runat="server" CssClass="register-input label-danger" Visible="false" Text="Try Again!"></asp:Label>
+                    <asp:Button runat="server" ID="RegButton" Text="Create Acount" CssClass="register-button" OnClick="RegButton_Click" />
+                        </div>
 
-            </div>
+                </div>
 
-            <div class="col-lg-5 ">
-                <h1 class="register-title">Login</h1>
-                <form  runat="server" class="register" method="post">
-                    
-                    <asp:TextBox id="userName_login" runat="server" class="register-input" placeholder="Username" />
-                    <asp:TextBox id="passwordLogin" runat="server"  TextMode="Password" class="register-input" placeholder="Password" />
+                <div class="col-lg-5 ">
+                    <h1 class="register-title">Login</h1>
+                    <div class="register">
+                    <asp:TextBox ID="userName_login" runat="server" class="register-input" placeholder="Username" />
+                    <asp:TextBox ID="passwordLogin" runat="server" TextMode="Password" class="register-input" placeholder="Password" />
+                    <asp:Label ID="ErrorLogin" runat="server" CssClass="register-input label-danger" Visible="false" Text="Try Again!"></asp:Label>
                     <asp:Button runat="server" ID="LoginButton" Text="Login" CssClass="register-button" OnClick="LoginButton_Click" />
+                        </div>
 
-                </form>
+                </div>
+            </form>
 
-            </div>
         </div>
     </div>
 

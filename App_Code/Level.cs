@@ -21,12 +21,14 @@ public class Level
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "select * from Level where id = " + levelId;
+        cmd.CommandText = "select * from [Level] where id = " + levelId;
         SqlDataReader dataReader = cmd.ExecuteReader();
         Level level = null;
-        if (dataReader.Read())
-            level = new Level(dataReader.GetInt32(0),
-                              dataReader.GetString(1));
+        if (dataReader.Read()) {
+            level = new Level(Convert.ToInt32(dataReader.GetValue(1)),
+                                  dataReader.GetString(0));
+        }
+            
         cmd.Connection.Close();
         return level;
     }

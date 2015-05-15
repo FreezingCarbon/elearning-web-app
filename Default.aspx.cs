@@ -9,7 +9,15 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-   
+        List<ClassRoom> classes = ClassRoom.GetAllClassRooms();
+        foreach (ClassRoom cls in classes)
+        {
+            Level lvl=Level.GetLevelById(cls.levelID);
+           string lname="";
+           if (lvl != null) { lname = lvl.levelName; }
+           else { lname = cls.levelID.ToString(); }
+            ListBox1.Items.Add(new ListItem(lname + " - " + cls.classRoomID.ToString(), cls.classRoomID.ToString()));
+        }
     }
     protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
     {
@@ -35,6 +43,20 @@ public partial class _Default : System.Web.UI.Page
             }
             Response.Redirect("home.aspx");
         }
-        else {  }
+        else { ErrorLogin.Visible = true; }
+    }
+    protected void RegButton_Click(object sender, EventArgs e)
+    {
+
+        Student student = new Student(0, RegUser.Text, RegPass.Text, RegName.Text, RegMail.Text, DateTime.Now, Convert.ToInt32(ListBox1.SelectedValue));
+        student.Insert();
+        if (student.userID != -1)
+        {
+            Session["user"] = student;
+
+            Session["userType"] = "student";
+            Response.Redirect("home.aspx");
+        }
+        else { RegisError.Visible = true; }
     }
 }

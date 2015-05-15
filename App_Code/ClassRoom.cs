@@ -17,12 +17,25 @@ public class ClassRoom
         this.levelID = level.levelID;
     }
 
-    private ClassRoom(int classRoomID, int levelID)
+    public ClassRoom(int classRoomID, int levelID)
     {
         this.classRoomID = classRoomID;
         this.levelID = levelID;
     }
-
+    static public List<ClassRoom> GetAllClassRooms()
+    {
+        List<ClassRoom> classes = new List<ClassRoom>();
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from Class";
+        SqlDataReader dr = cmd.ExecuteReader();
+        while (dr.Read())
+        {
+            classes.Add(new ClassRoom(Convert.ToInt32(dr.GetValue(1)), Convert.ToInt32(dr.GetValue(0))));
+        }
+        return classes;
+    }
     static public ClassRoom GetClassRoomById(int classRoomID)
     {
         SqlCommand cmd = new SqlCommand();

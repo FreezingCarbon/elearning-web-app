@@ -15,24 +15,28 @@ public class Student : ELearn.User
     public bool isActive;
 
     public Student(int userID, string username, string password, string name, string mail,
-        DateTime lastSeen, ClassRoom classRoom) : base(userID, username, password, name, mail, lastSeen)
+        DateTime lastSeen, ClassRoom classRoom)
+        : base(userID, username, password, name, mail, lastSeen)
     {
         if (classRoom != null)
             this.classRoomID = classRoom.classRoomID;
-        else {
+        else
+        {
             this.classRoomID = -1;
             isActive = false;
         }
     }
 
     public Student(int userID, string username, string password, string name, string mail,
-        DateTime lastSeen, int classRoomID) : base(userID, username, password, name, mail, lastSeen)
+        DateTime lastSeen, int classRoomID)
+        : base(userID, username, password, name, mail, lastSeen)
     {
         this.classRoomID = classRoomID;
     }
 
-    private Student(int userID, string username, string password, string name, string mail,
-        DateTime lastSeen, int classRoomID, bool isActive) : base(userID, username, password, name, mail, lastSeen)
+    public Student(int userID, string username, string password, string name, string mail,
+        DateTime lastSeen, int classRoomID, bool isActive)
+        : base(userID, username, password, name, mail, lastSeen)
     {
         this.classRoomID = classRoomID;
         this.isActive = isActive;
@@ -69,16 +73,16 @@ public class Student : ELearn.User
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "insert into [User] values ( " 
-                          + userID + " , '" 
-                          + username + "','" 
-                          + password + "','" 
-                          + name + "','" 
-                          + mail + "' , '" 
-                          + lastSeen.ToString() 
+        cmd.CommandText = "insert into [User]  ([username],[password],[name],[mail],[lastSeen]"
+           + ",[userType],[isAdmin],[classID])	OUTPUT INSERTED.id values ( '"
+                          + username + "','"
+                          + password + "','"
+                          + name + "','"
+                          + mail + "' , '"
+                          + lastSeen.ToString()
                           + "','student', 0 , "
-                          + ((classRoomID == -1) ? "null" : classRoomID.ToString()) + " ,0 )";
-        cmd.ExecuteNonQuery();
+                          + ((classRoomID == -1) ? "null" : classRoomID.ToString()) + " )";
+        userID = Convert.ToInt32(cmd.ExecuteScalar());
         cmd.Connection.Close();
     }
 
