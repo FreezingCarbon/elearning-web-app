@@ -52,7 +52,12 @@ public class Message
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "insert into Message values( " + messageID + " , " + senderID + " , '" + subject + "' , '" + body + "' , " + time + "  )";
+        cmd.CommandText = @"insert into Message values( " + 
+                            messageID + " , " + 
+                            senderID + " , '" + 
+                            subject + "' , '" + 
+                            body + "' , '" + 
+                            time + "'  )";
         cmd.ExecuteNonQuery();
         con.Close();
 
@@ -74,14 +79,14 @@ public class Message
             SqlDataReader dataReader2 = cmd.ExecuteReader();
             List<int> recieverIDs = new List<int>();
             while (dataReader2.Read())
-                recieverIDs.Add(Convert.ToInt32(dataReader2.GetValue(0)));
+                recieverIDs.Add(Convert.ToInt32(dataReader.GetValue(0)));
 
             Message message = new Message(dataReader.GetString(2),
                                           dataReader.GetString(3),
                                           dataReader.GetDateTime(4),
-                                          dataReader.GetInt32(1),
+                                          Convert.ToInt32(dataReader.GetValue(1)),
                                           recieverIDs);
-            message.messageID = dataReader.GetInt32(0);
+            message.messageID = Convert.ToInt32(dataReader.GetValue(0));
             messages.Add(message);
         }
         cmd.Connection.Close();
@@ -99,17 +104,18 @@ public class Message
         while(dataReader.Read()){
             SqlCommand cmd2 = new SqlCommand();
             cmd2.Connection = con;
-            cmd2.CommandText = "select * from Message where messageID = " + Convert.ToInt32(dataReader.GetValue(1));
+            cmd2.CommandText = "select * from Message where messageID = " + dataReader.GetInt32(0);
             SqlDataReader dataReader2 = cmd2.ExecuteReader();
 
-            Message mess = new Message(dataReader2.GetString(2),
+            Message message = new Message(dataReader2.GetString(2),
                                        dataReader2.GetString(3),
                                        dataReader2.GetDateTime(4),
-                                       dataReader2.GetInt32(1));
-            
-            messages.Add(mess);
+                                       Convert.ToInt32(dataReader.GetValue(1)));
+            message.messageID = Convert.ToInt32(dataReader.GetValue(0));
+            messages.Add(message);
         }
-        con.Close();
+
+        cmd.Connection.Close();
         return messages;
     }
 }

@@ -24,7 +24,7 @@ public class Teacher : ELearn.User
             if (!dataReader.GetValue(6).ToString().Equals("teacher"))
                 throw new Exception("the user with the specified id is not a teacher");
 
-            teacher = new Teacher(dataReader.GetInt32(0),
+            teacher = new Teacher(Convert.ToInt32(dataReader.GetValue(0)),
                                   dataReader.GetString(1),
                                   dataReader.GetString(2),
                                   dataReader.GetString(3),
@@ -54,17 +54,37 @@ public class Teacher : ELearn.User
 
     public List<Tuple<Subject, List<ClassRoom>>> GetSubjects()
     {
-        // static data
-        Level l1 = new Level(1, "first grade");
-        ClassRoom c1 = new ClassRoom(1, l1);
-        ClassRoom c2 = new ClassRoom(2, l1);
-        Subject s1 = new Subject(1, "english", l1);
-        List<ClassRoom> subjectClasses = new List<ClassRoom>();
-        subjectClasses.Add(c1);
-        subjectClasses.Add(c2);
-        List<Tuple<Subject, List<ClassRoom>>> classes = new List<Tuple<Subject, List<ClassRoom>>>();
-        classes.Add(new Tuple<Subject, List<ClassRoom>>(s1, subjectClasses));
-        return classes;
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = @"select Subject.id, Subject.levelId, Subject.title, Teaches.classId
+                            from Teaches inner join Subject
+                                on Teaches.subjectId = Subject.id
+                            where Teaches.teacherId = " + this.userID;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        Hashtable hashTable1 = new Hashtable();
+        List<Tuple<Subject, List<ClassRoom>>> subjects = new List<Tuple<Subject, List<ClassRoom>>>();
+        while (dataReader.Read())
+        {
+            int subjectId = Convert.ToInt32(dataReader.GetValue(0));
+            int levelId = Convert.ToInt32(dataReader.GetValue(1));
+            string subjectTitle = dataReader.GetString(2);
+            int classId = Convert.ToInt32(dataReader.GetValue(3));
+            int index;
+            if (hashTable1.Contains(subjectId))
+                index = (int)hashTable1[subjectId];
+            else
+            {
+                index = subjects.Count;
+                hashTable1.Add(subjectId, index);
+                subjects.Add(new Tuple<Subject, List<ClassRoom>>(
+                                new Subject(subjectId, subjectTitle, levelId), new List<ClassRoom>()));
+            }
+
+            subjects[index].Item2.Add(new ClassRoom(classId,levelId));
+        }
+
+        return subjects;
     }
 
     public override List<List<string>> GetSchedule()
@@ -111,8 +131,8 @@ public class Teacher : ELearn.User
 
         while (dataReader.Read())
         {
-            DateTime startTime = Convert.ToDateTime(dataReader.GetValue(0));
-            String sessionDay = dataReader.GetValue(0).ToString().ToLower();
+            DateTime startTime = dataReader.GetDateTime(0);
+            String sessionDay = dataReader.GetString(0).ToLower();
             schedule[(int)hashTable1[startTime.Hour]][(int)hashTable2[sessionDay]] = "Class: " + dataReader.GetString(2) +
                                                                                      "Subject: " + dataReader.GetString(3);
         }

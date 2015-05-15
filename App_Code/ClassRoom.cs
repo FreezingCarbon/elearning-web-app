@@ -46,7 +46,7 @@ public class ClassRoom
         ClassRoom classRoom = null;
         if (dr.Read())
             classRoom = new ClassRoom(classRoomID,
-                                      dr.GetInt32(0));
+                                      Convert.ToInt32(dr.GetValue(0)));
         cmd.Connection.Close();
         return classRoom;
     }
@@ -103,8 +103,8 @@ public class ClassRoom
 
         while (dataReader.Read())
         {
-            DateTime startTime = Convert.ToDateTime(dataReader.GetValue(0));
-            String sessionDay = dataReader.GetValue(0).ToString().ToLower();
+            DateTime startTime = dataReader.GetDateTime(0);
+            String sessionDay = dataReader.GetString(0).ToLower();
             schedule[(int)hashTable1[startTime.Hour]][(int)hashTable2[sessionDay]] = "Class: " + dataReader.GetString(2) +
                                                                                      "Subject: " + dataReader.GetString(3);
         }

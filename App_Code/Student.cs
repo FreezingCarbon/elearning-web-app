@@ -55,13 +55,13 @@ public class Student : ELearn.User
             if (!dataReader.GetValue(6).ToString().Equals("student"))
                 throw new Exception("the user with the specified id is not a student");
 
-            student = new Student(dataReader.GetInt32(0),
+            student = new Student(Convert.ToInt32(dataReader.GetValue(0)),
                                   dataReader.GetString(1),
                                   dataReader.GetString(2),
                                   dataReader.GetString(3),
                                   dataReader.GetString(4),
                                   dataReader.GetDateTime(5),
-                                  dataReader.GetInt32(8),
+                                  Convert.ToInt32(dataReader.GetValue(8)),
                                   dataReader.GetBoolean(9));
         }
         cmd.Connection.Close();

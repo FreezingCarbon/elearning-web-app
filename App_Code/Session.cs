@@ -40,11 +40,11 @@ public class Session
         SqlDataReader dataReader = cmd.ExecuteReader();
         Session session = null;
         if(dataReader.Read())
-            session = new Session(dataReader.GetInt32(0),
+            session = new Session(Convert.ToInt32(dataReader.GetValue(0)),
                                   dataReader.GetDateTime(2),
                                   dataReader.GetString(3),
                                   dataReader.GetString(4),
-                                  dataReader.GetInt32(1));
+                                  Convert.ToInt32(dataReader.GetValue(1)));
         cmd.Connection.Close();
         return session;
     }

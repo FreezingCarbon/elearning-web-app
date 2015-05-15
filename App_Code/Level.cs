@@ -24,11 +24,11 @@ public class Level
         cmd.CommandText = "select * from [Level] where id = " + levelId;
         SqlDataReader dataReader = cmd.ExecuteReader();
         Level level = null;
-        if (dataReader.Read()) {
+        if (dataReader.Read())
+        {
             level = new Level(Convert.ToInt32(dataReader.GetValue(1)),
                                   dataReader.GetString(0));
         }
-            
         cmd.Connection.Close();
         return level;
     }
@@ -43,7 +43,7 @@ public class Level
         List<Level> allLevels = new List<Level>();
         while (dataReader.Read())
         {
-            Level level = new Level(dataReader.GetInt32(0),
+            Level level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
                                     dataReader.GetString(1));
             allLevels.Add(level);
         }
@@ -62,7 +62,7 @@ public class Level
         List<Subject> subjects = new List<Subject>();
         while (dataReader.Read())
         {
-            Subject subject = new Subject(dataReader.GetInt32(0),
+            Subject subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
                                           dataReader.GetString(2),
                                           levelID);
             subjects.Add(subject);
