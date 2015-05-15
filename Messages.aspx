@@ -23,7 +23,6 @@
         <div class="content_resize">
             <div class="container">
                 <div class="row">
-
                     <div class="col-sm-9 col-md-10">
                         <!-- Split button -->
                         <div class="btn-group">
@@ -47,22 +46,32 @@
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="inbox">
                                 <div class="list-group">
+                                    <% List<Message> msgs = Message.GetMessagesByRecieverId(((User)Session["user"]).userID);
+                                       foreach (Message msg in msgs)
+                                       { 
+                                    %>
                                     <a href="#" class="list-group-item">
-                                        <span class="name" style="min-width: 120px; display: inline-block;">Bhaumik Patel</span> <span class="">This is big title</span>
-                                        <span class="text-muted" style="font-size: 11px;">- Hi hello how r u ?</span>
-                                        <span class="badge">12:10 AM</span>
+                                        <span class="name" style="min-width: 120px; display: inline-block;"><%=msg.subject %></span> <span class="">This is big title</span>
+                                        <span class="text-muted" style="font-size: 11px;"><%=msg.body %></span>
+                                        <span class="badge"><%=msg.time %></span>
 
                                     </a>
+                                    <%} %>
                                 </div>
                             </div>
                             <div class="tab-pane fade in " id="sent">
                                 <div class="list-group">
+                                    <% msgs = Message.GetMessagesBySenderId(((User)Session["user"]).userID);
+                                       foreach (Message msg in msgs)
+                                       { 
+                                    %>
                                     <a href="#" class="list-group-item">
-                                        <span class="name" style="min-width: 120px; display: inline-block;">Bhaumik Patel</span> <span class="">This is big title</span>
-                                        <span class="text-muted" style="font-size: 11px;">- Hi hello how r u ?</span>
-                                        <span class="badge">12:10 AM</span>
+                                        <span class="name" style="min-width: 120px; display: inline-block;"><%=msg.subject %></span> <span class="">This is big title</span>
+                                        <span class="text-muted" style="font-size: 11px;"><%=msg.body %></span>
+                                        <span class="badge"><%=msg.time %></span>
 
                                     </a>
+                                    <%} %>
                                 </div>
                             </div>
                         </div>
@@ -74,33 +83,40 @@
         <div id="send_modal" class="modal fade">
             <div class="modal-dialog ">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Send Message</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-inline">
+                    <form class="form-inline" runat="server">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Send Message</h4>
+                        </div>
+                        <div class="modal-body">
                             <div class="row">
                                 <div class="col-xs-5 form-group">
+
+                                    <label>subject:</label>
+                                    <asp:TextBox runat="server" ID="subject1"></asp:TextBox>
                                     <label>To:</label>
-                                    <select class="form-control " size="14" name="to" multiple>
-                                        <option value="112">Amgad Mohamed Hussien</option>
-                                        <option value="113">Saab</option>
-                                        <option value="114">Opel</option>
-                                        <option value="115">Audi</option>
-                                    </select>
+                                    <asp:ListBox ID="list1" runat="server" class="form-control " Height="200" name="to" SelectionMode="Multiple">
+
+                                        <asp:ListItem Value="112">Amgad Mohamed Hussien</asp:ListItem>
+                                        <asp:ListItem Value="113">Saab</asp:ListItem>
+                                        <asp:ListItem Value="114">Opel</asp:ListItem>
+                                        <asp:ListItem Value="115">Audi</asp:ListItem>
+                                    </asp:ListBox>
                                 </div>
                                 <div class="col-xs-7 form-group">
                                     <label>Message:</label>
-                                    <textarea class="form-control" rows="11" cols="38"></textarea>
+                                    <asp:TextBox ID="message1" class="form-control" TextMode="MultiLine" Height="250" Width="270" runat="server"></asp:TextBox>
+
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send</button>
-                    </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <asp:Button runat="server" ID="button1" CssClass="btn btn-primary" Text="Send" OnClick="button1OnClick" />
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

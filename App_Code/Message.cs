@@ -24,7 +24,7 @@ public class Message
         this.recieverIDs.Add (reciever.userID);
     }
 
-    private Message(int messageID, string subject, string body, DateTime time, int senderID, int recieverID)
+    public Message(int messageID, string subject, string body, DateTime time, int senderID, int recieverID)
     {
         this.messageID = messageID;
         this.subject = subject;
@@ -33,12 +33,20 @@ public class Message
         this.senderID = senderID;
         this.recieverIDs.Add(recieverID);
     }
-    private Message(string subject, string body, DateTime time, int senderID)
+    public Message(string subject, string body, DateTime time, int senderID)
     {
         this.subject = subject;
         this.body = body;
         this.time = time;
         this.senderID = senderID;
+    }
+    public Message(string subject, string body, DateTime time, int senderID, List<int> receiverIDs)
+    {
+        this.subject = subject;
+        this.body = body;
+        this.time = time;
+        this.senderID = senderID;
+        this.recieverIDs = receiverIDs;
     }
     public int sendMessage()
     {
