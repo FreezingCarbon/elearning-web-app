@@ -17,7 +17,7 @@ public class ClassRoom
         this.levelID = level.levelID;
     }
 
-    private ClassRoom(int classRoomID, int levelID)
+    public ClassRoom(int classRoomID, int levelID)
     {
         this.classRoomID = classRoomID;
         this.levelID = levelID;
@@ -90,8 +90,8 @@ public class ClassRoom
 
         while (dataReader.Read())
         {
-            DateTime startTime = Convert.ToDateTime(dataReader.GetValue(0));
-            String sessionDay = dataReader.GetValue(0).ToString().ToLower();
+            DateTime startTime = dataReader.GetDateTime(0);
+            String sessionDay = dataReader.GetString(0).ToLower();
             schedule[(int)hashTable1[startTime.Hour]][(int)hashTable2[sessionDay]] = "Class: " + dataReader.GetString(2) +
                                                                                      "Subject: " + dataReader.GetString(3);
         }
