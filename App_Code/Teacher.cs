@@ -24,7 +24,7 @@ public class Teacher : ELearn.User
             if (!dataReader.GetValue(6).ToString().Equals("teacher"))
                 throw new Exception("the user with the specified id is not a teacher");
 
-            teacher = new Teacher(dataReader.GetInt32(0),
+            teacher = new Teacher(Convert.ToInt32(dataReader.GetValue(0)),
                                   dataReader.GetString(1),
                                   dataReader.GetString(2),
                                   dataReader.GetString(3),
@@ -66,10 +66,10 @@ public class Teacher : ELearn.User
         List<Tuple<Subject, List<ClassRoom>>> subjects = new List<Tuple<Subject, List<ClassRoom>>>();
         while (dataReader.Read())
         {
-            int subjectId = dataReader.GetInt32(0);
-            int levelId = dataReader.GetInt32(1);
+            int subjectId = Convert.ToInt32(dataReader.GetValue(0));
+            int levelId = Convert.ToInt32(dataReader.GetValue(1));
             string subjectTitle = dataReader.GetString(2);
-            int classId = dataReader.GetInt32(3);
+            int classId = Convert.ToInt32(dataReader.GetValue(3));
             int index;
             if (hashTable1.Contains(subjectId))
                 index = (int)hashTable1[subjectId];

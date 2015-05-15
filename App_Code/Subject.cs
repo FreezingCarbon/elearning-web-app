@@ -34,9 +34,9 @@ public class Subject
         SqlDataReader dataReader = cmd.ExecuteReader();
         Subject subject = null;
         if(dataReader.Read())
-            subject = new Subject(dataReader.GetInt32(0),
+            subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
                                   dataReader.GetString(2),
-                                  dataReader.GetInt32(1));
+                                  Convert.ToInt32(dataReader.GetValue(1)));
         cmd.Connection.Close();
         return subject;
     }

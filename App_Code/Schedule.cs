@@ -43,12 +43,12 @@ public class Schedule
         SqlDataReader dataReader = cmd.ExecuteReader();
         Schedule schedule = null;
         if(dataReader.Read())
-            schedule = new Schedule(dataReader.GetInt32(0),
+            schedule = new Schedule(Convert.ToInt32(dataReader.GetValue(0)),
                                     dataReader.GetString(3),
                                     dataReader.GetDateTime(4),
                                     dataReader.GetDateTime(5),
-                                    dataReader.GetInt32(2),
-                                    dataReader.GetInt32(1));
+                                    Convert.ToInt32(dataReader.GetValue(2)),
+                                    Convert.ToInt32(dataReader.GetValue(1)));
         cmd.Connection.Close();
         return schedule;
     }

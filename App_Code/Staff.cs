@@ -28,7 +28,7 @@ public class Staff : ELearn.User
             if (!dataReader.GetValue(6).ToString().Equals("staff"))
                 throw new Exception("the user with the specified id is not a staff");
 
-            staff = new Staff(dataReader.GetInt32(0),
+            staff = new Staff(Convert.ToInt32(dataReader.GetValue(0)),
                               dataReader.GetString(1),
                               dataReader.GetString(2),
                               dataReader.GetString(3),

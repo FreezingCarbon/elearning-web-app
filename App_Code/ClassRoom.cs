@@ -33,7 +33,7 @@ public class ClassRoom
         ClassRoom classRoom = null;
         if (dr.Read())
             classRoom = new ClassRoom(classRoomID,
-                                      dr.GetInt32(0));
+                                      Convert.ToInt32(dr.GetValue(0)));
         cmd.Connection.Close();
         return classRoom;
     }

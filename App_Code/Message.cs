@@ -79,14 +79,14 @@ public class Message
             SqlDataReader dataReader2 = cmd.ExecuteReader();
             List<int> recieverIDs = new List<int>();
             while (dataReader2.Read())
-                recieverIDs.Add(dataReader2.GetInt32(0));
+                recieverIDs.Add(Convert.ToInt32(dataReader.GetValue(0)));
 
             Message message = new Message(dataReader.GetString(2),
                                           dataReader.GetString(3),
                                           dataReader.GetDateTime(4),
-                                          dataReader.GetInt32(1),
+                                          Convert.ToInt32(dataReader.GetValue(1)),
                                           recieverIDs);
-            message.messageID = dataReader.GetInt32(0);
+            message.messageID = Convert.ToInt32(dataReader.GetValue(0));
             messages.Add(message);
         }
         cmd.Connection.Close();
@@ -110,8 +110,8 @@ public class Message
             Message message = new Message(dataReader2.GetString(2),
                                        dataReader2.GetString(3),
                                        dataReader2.GetDateTime(4),
-                                       dataReader2.GetInt32(1));
-            message.messageID = dataReader2.GetInt32(0);
+                                       Convert.ToInt32(dataReader.GetValue(1)));
+            message.messageID = Convert.ToInt32(dataReader.GetValue(0));
             messages.Add(message);
         }
 
