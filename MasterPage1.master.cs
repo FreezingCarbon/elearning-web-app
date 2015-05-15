@@ -9,6 +9,13 @@ public partial class MasterPage1 : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+      string url =  HttpContext.Current.Request.Url.AbsolutePath;
+      if (((User)Session["user"]) == null)
+      {
+          if (url != @"/default.aspx")
+          {
+              Response.Redirect("/default.aspx");
+          }
+      }
     }
 }
