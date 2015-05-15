@@ -21,7 +21,7 @@ public partial class Messages : System.Web.UI.Page
             recivers.Add(Convert.ToInt32(itemText.ToString()));
            
         }
-        Message newMessage = new Message(subject,message,DateTime.Now,((User)Session["user"]).userID,recivers);
+        Message newMessage = new Message(subject,message,DateTime.Now,((ELearn.User)Session["user"]).userID,recivers);
         newMessage.sendMessage();
     }
  

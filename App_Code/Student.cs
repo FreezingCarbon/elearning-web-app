@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 /// <summary>
 /// Summary description for Student
 /// </summary>
-public class Student : User
+public class Student : ELearn.User
 {
     public int classRoomID;
     public bool isActive;
@@ -23,6 +23,12 @@ public class Student : User
             this.classRoomID = -1;
             isActive = false;
         }
+    }
+
+    public Student(int userID, string username, string password, string name, string mail,
+        DateTime lastSeen, int classRoomID) : base(userID, username, password, name, mail, lastSeen)
+    {
+        this.classRoomID = classRoomID;
     }
 
     private Student(int userID, string username, string password, string name, string mail,

@@ -5,7 +5,7 @@ using System.Web;
 using System.Data.Sql;
 using System.Data.SqlClient;
 
-public class Teacher : User
+public class Teacher : ELearn.User
 {
     public Teacher(int userID, string username, string password, string name, string mail,
         DateTime lastSeen) : base(userID, username, password, name, mail, lastSeen) { }
