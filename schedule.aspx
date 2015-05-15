@@ -16,25 +16,30 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <%
+        //Session.Add("userType", "staff");
         List<List<string>> schedule = null;
-        if ((string)Session["userType"] == "student")
+        if (((string)Session["userType"]).Equals("student"))
             schedule = ((Student)Session["user"]).GetSchedule();
-        else if ((string)Session["userType"] == "teacher")
+        else if (((string)Session["userType"]).Equals("teacher"))
             schedule = ((Teacher)Session["user"]).GetSchedule();
-        else if ((string)Session["userType"] == "staff")
-            schedule = ((Staff)Session["user"]).GetSchedule();
+        else if (((string)Session["userType"]).Equals("staff"))
+        {
+            schedule = new List<List<string>>(5);
+            for (int i = 0; i < 5; ++i)
+                schedule.Add(new List<string>());
+        }
         else Response.Redirect("Default.aspx");
     %>
     <table width="80%" align="center">
         <div id="head_nav">
             <tr>
                 <th>Time</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thrusday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
+                <th>saturday</th>
+                <th>sunday</th>
+                <th>monday</th>
+                <th>tuesday</th>
+                <th>wednesday</th>
+                <th>thursday</th>
             </tr>
         </div>
 

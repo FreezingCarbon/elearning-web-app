@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Sql;
 using System.Data.SqlClient;
+using System.Collections;
 
 public class ClassRoom
 {
@@ -32,7 +33,7 @@ public class ClassRoom
         ClassRoom classRoom = null;
         if (dr.Read())
             classRoom = new ClassRoom(classRoomID,
-                                      Convert.ToInt32(dr.GetValue(0)));
+                                      dr.GetInt32(0));
         cmd.Connection.Close();
         return classRoom;
     }
@@ -54,17 +55,48 @@ public class ClassRoom
 
     public static List<List<string>> GetSchedule(int classRoomID)
     {
-        SqlConnection connection = DatabaseConnectionFactory.GetConnection();
-        string query = @"select Schedule.startTime, Schedule.sessionDay, Schedule.classId, Subject.title
-                        from Schedule
-	                        inner join Subject
-	                        on Schedule.subjectId = Subject.id
-                        where Schedule.classId = " + classRoomID + @"
-                        order by Schedule.startTime asc";
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = @"select Schedule.startTime, Schedule.sessionDay, Schedule.classId, Subject.title
+                            from Schedule
+	                            inner join Subject
+	                            on Schedule.subjectId = Subject.id
+                            where Schedule.classId = " + classRoomID + @"
+                            order by Schedule.startTime asc";
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        List<List<string>> schedule = new List<List<string>>(5);
+        for (int i = 0; i < 5; ++i)
+        {
+            schedule.Add(new List<string>(6));
+            for (int j = 0; j < 6; ++j)
+                schedule[j].Add("");
+        }
 
+        Hashtable hashTable1 = new Hashtable();
+        hashTable1.Add(10, 0);
+        hashTable1.Add(11, 1);
+        hashTable1.Add(12, 2);
+        hashTable1.Add(1, 3);
+        hashTable1.Add(2, 4);
 
-        connection.Close();
+        Hashtable hashTable2 = new Hashtable();
+        hashTable2.Add("saturday", 0);
+        hashTable2.Add("sunday", 1);
+        hashTable2.Add("monday", 2);
+        hashTable2.Add("tuesday", 3);
+        hashTable2.Add("wednesday", 4);
+        hashTable2.Add("thursday", 5);
 
-        return null;
+        while (dataReader.Read())
+        {
+            DateTime startTime = Convert.ToDateTime(dataReader.GetValue(0));
+            String sessionDay = dataReader.GetValue(0).ToString().ToLower();
+            schedule[(int)hashTable1[startTime.Hour]][(int)hashTable2[sessionDay]] = "Class: " + dataReader.GetString(2) +
+                                                                                      "Subject: " + dataReader.GetString(3);
+        }
+
+        cmd.Connection.Close();
+        return schedule;
     }
 }

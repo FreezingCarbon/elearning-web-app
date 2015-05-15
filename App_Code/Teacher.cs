@@ -23,12 +23,12 @@ public class Teacher : User
             if (!dataReader.GetValue(6).ToString().Equals("teacher"))
                 throw new Exception("the user with the specified id is not a teacher");
 
-            teacher = new Teacher(Convert.ToInt32(dataReader.GetValue(0)),
-                                  dataReader.GetValue(1).ToString(),
-                                  dataReader.GetValue(2).ToString(),
-                                  dataReader.GetValue(3).ToString(),
-                                  dataReader.GetValue(4).ToString(),
-                                  Convert.ToDateTime(dataReader.GetValue(5)));
+            teacher = new Teacher(dataReader.GetInt32(0),
+                                  dataReader.GetString(1),
+                                  dataReader.GetString(2),
+                                  dataReader.GetString(3),
+                                  dataReader.GetString(4),
+                                  dataReader.GetDateTime(5));
         }
         cmd.Connection.Close();
         return teacher;
