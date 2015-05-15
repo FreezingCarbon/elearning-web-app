@@ -93,7 +93,7 @@ public class ClassRoom
             DateTime startTime = Convert.ToDateTime(dataReader.GetValue(0));
             String sessionDay = dataReader.GetValue(0).ToString().ToLower();
             schedule[(int)hashTable1[startTime.Hour]][(int)hashTable2[sessionDay]] = "Class: " + dataReader.GetString(2) +
-                                                                                      "Subject: " + dataReader.GetString(3);
+                                                                                     "Subject: " + dataReader.GetString(3);
         }
 
         cmd.Connection.Close();
