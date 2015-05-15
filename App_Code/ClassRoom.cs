@@ -29,8 +29,12 @@ public class ClassRoom
         cmd.Connection = con;
         cmd.CommandText = "select levelId from Class where id = " + classRoomID;
         SqlDataReader dr = cmd.ExecuteReader();
-        int levelId = Convert.ToInt32(dr.GetValue(0));
-        return new ClassRoom(classRoomID, levelId);
+        if (dr.Read())
+        {
+            int levelId = Convert.ToInt32(dr.GetValue(0));
+            return new ClassRoom(classRoomID, levelId);
+        } 
+        return null;
     }
 
     public void Insert()

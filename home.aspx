@@ -2,10 +2,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Stylesheets" runat="server"></asp:Content>
 <asp:Content ID="menu" ContentPlaceHolderID="ContentPlaceHolder3" runat="server">
-    <%
-        if(((User)Session["user"]) == null)
-            Response.Redirect("Default.aspx");
-         %>
+    
     <div class="menu_nav">
         <ul>
             <li><a href="schedule.aspx">Schedule</a></li>
@@ -48,8 +45,8 @@
                 </div>
                 <%}
                   }
-                  else if ((string)Session["userType"] == "student") // student see his class his subjects
-                  {
+                  else if (((string)Session["userType"]).Equals("student")) // student see his class his subjects
+                  {/*
                       ClassRoom classRoom = ((Student)Session["user"]).GetClassRoom(); %>
                 <div class="article">
                     <h2><span>Class <%=classRoom.classRoomID%></span></h2>
@@ -63,7 +60,7 @@
                         %>
                     </ul>
                 </div>
-                <%}
+                <%*/}
                   else if ((string)Session["userType"] == "teacher") // teacher see his subjects his classes
                   {
                       foreach (Tuple<Subject, List<ClassRoom>> subjectClasses in ((Teacher)Session["user"]).GetSubjects())
