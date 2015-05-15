@@ -23,9 +23,10 @@ public class Level
         cmd.Connection = con;
         cmd.CommandText = "select * from Level where id = " + levelId;
         SqlDataReader dataReader = cmd.ExecuteReader();
-        dataReader.Read();
-        Level level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
-                                dataReader.GetValue(1).ToString());
+        Level level = null;
+        if (dataReader.Read())
+            level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
+                              dataReader.GetValue(1).ToString());
         cmd.Connection.Close();
         return level;
     }

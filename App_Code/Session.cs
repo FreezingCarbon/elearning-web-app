@@ -38,13 +38,13 @@ public class Session
         cmd.Connection = con;
         cmd.CommandText = "select * from Session where  id = " + sessionId;
         SqlDataReader dataReader = cmd.ExecuteReader();
-        dataReader.Read();
-
-        Session session = new Session(Convert.ToInt32(dataReader.GetValue(0)),
-                                      Convert.ToDateTime(dataReader.GetValue(2)),
-                                      dataReader.GetValue(3).ToString(),
-                                      dataReader.GetValue(4).ToString(),
-                                      Convert.ToInt32(dataReader.GetValue(1)));
+        Session session = null;
+        if(dataReader.Read())
+            session = new Session(Convert.ToInt32(dataReader.GetValue(0)),
+                                  Convert.ToDateTime(dataReader.GetValue(2)),
+                                  dataReader.GetValue(3).ToString(),
+                                  dataReader.GetValue(4).ToString(),
+                                  Convert.ToInt32(dataReader.GetValue(1)));
         cmd.Connection.Close();
         return session;
     }

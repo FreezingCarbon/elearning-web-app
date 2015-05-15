@@ -39,18 +39,21 @@ public class Student : User
         cmd.Connection = con;
         cmd.CommandText = "select * from [User] where  id = " + studentId;
         SqlDataReader dataReader = cmd.ExecuteReader();
-        dataReader.Read();
-        if (!dataReader.GetValue(6).ToString().Equals("student"))
-            throw new Exception("the user with the specified id is not a student");
+        Student student = null;
+        if (dataReader.Read())
+        {
+            if (!dataReader.GetValue(6).ToString().Equals("student"))
+                throw new Exception("the user with the specified id is not a student");
 
-        Student student = new Student(Convert.ToInt32(dataReader.GetValue(0)),
-                                      dataReader.GetValue(1).ToString(),
-                                      dataReader.GetValue(2).ToString(),
-                                      dataReader.GetValue(3).ToString(),
-                                      dataReader.GetValue(4).ToString(),
-                                      Convert.ToDateTime(dataReader.GetValue(5)),
-                                      Convert.ToInt32(dataReader.GetValue(8)),
-                                      Convert.ToBoolean(dataReader.GetValue(9)));
+            student = new Student(Convert.ToInt32(dataReader.GetValue(0)),
+                                  dataReader.GetValue(1).ToString(),
+                                  dataReader.GetValue(2).ToString(),
+                                  dataReader.GetValue(3).ToString(),
+                                  dataReader.GetValue(4).ToString(),
+                                  Convert.ToDateTime(dataReader.GetValue(5)),
+                                  Convert.ToInt32(dataReader.GetValue(8)),
+                                  Convert.ToBoolean(dataReader.GetValue(9)));
+        }
         cmd.Connection.Close();
         return student;
     }

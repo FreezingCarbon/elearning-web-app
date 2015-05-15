@@ -32,10 +32,11 @@ public class Subject
         cmd.Connection = con;
         cmd.CommandText = "select * from Subject where id = " + subjectId;
         SqlDataReader dataReader = cmd.ExecuteReader();
-        dataReader.Read();
-        Subject subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
-                                      dataReader.GetValue(2).ToString(),
-                                      Convert.ToInt32(dataReader.GetValue(1)));
+        Subject subject = null;
+        if(dataReader.Read())
+            subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
+                                  dataReader.GetValue(2).ToString(),
+                                  Convert.ToInt32(dataReader.GetValue(1)));
         cmd.Connection.Close();
         return subject;
     }

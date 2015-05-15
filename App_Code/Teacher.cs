@@ -17,16 +17,19 @@ public class Teacher : User
         cmd.Connection = con;
         cmd.CommandText = "select * from [User] where  id = " + teacherId;
         SqlDataReader dataReader = cmd.ExecuteReader();
-        dataReader.Read();
-        if(!dataReader.GetValue(6).ToString().Equals("teacher"))
-            throw new Exception("the user with the specified id is not a teacher");
+        Teacher teacher = null;
+        if (dataReader.Read())
+        {
+            if (!dataReader.GetValue(6).ToString().Equals("teacher"))
+                throw new Exception("the user with the specified id is not a teacher");
 
-        Teacher teacher = new Teacher(Convert.ToInt32(dataReader.GetValue(0)),
-                                      dataReader.GetValue(1).ToString(),
-                                      dataReader.GetValue(2).ToString(),
-                                      dataReader.GetValue(3).ToString(),
-                                      dataReader.GetValue(4).ToString(),
-                                      Convert.ToDateTime(dataReader.GetValue(5)));
+            teacher = new Teacher(Convert.ToInt32(dataReader.GetValue(0)),
+                                  dataReader.GetValue(1).ToString(),
+                                  dataReader.GetValue(2).ToString(),
+                                  dataReader.GetValue(3).ToString(),
+                                  dataReader.GetValue(4).ToString(),
+                                  Convert.ToDateTime(dataReader.GetValue(5)));
+        }
         cmd.Connection.Close();
         return teacher;
     }
