@@ -14,19 +14,36 @@ public class Staff : ELearn.User
     {
         this.isAdmin = isAdmin;
     }
-    public void update()
+    public override void update(String nName, string nUser, string nMail, string nPass)
     {
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "update [User] set userName='" + username + "','"
-                            + password + "','"
-                            + name + "','"
-                            + mail + "' where id=" + userID;
+        cmd.CommandText = "update [User] set userName='" + nUser + "',password ='"
+                            + nPass + "',name= '"
+                            + nName + "',mail='"
+                            + nMail + "' where id=" + userID;
         ;
         cmd.ExecuteNonQuery();
 
 
+    }
+
+    public void Insert()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "insert into [User]  ([username],[password],[name],[mail],[lastSeen]"
+           + ",[userType],[isAdmin],[classID])	OUTPUT INSERTED.id values ( '"
+                          + username + "','"
+                          + password + "','"
+                          + name + "','"
+                          + mail + "' , '"
+                          + lastSeen.ToString()
+                          + "','staff', 1 , null)";
+        userID = Convert.ToInt32(cmd.ExecuteScalar());
+        cmd.Connection.Close();
     }
     static public Staff GetUserById(int staffId)
     {

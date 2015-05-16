@@ -21,6 +21,7 @@ public partial class _Default : System.Web.UI.Page
            else { lname = cls.levelID.ToString(); }
             ListBox1.Items.Add(new ListItem(lname + " - " + cls.classRoomID.ToString(), cls.classRoomID.ToString()));
         }
+        LoginButton.Focus();
     }
     protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
     {

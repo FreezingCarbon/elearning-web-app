@@ -23,7 +23,7 @@ namespace ELearn
             this.mail = mail;
             this.lastSeen = lastSeen;
         }
-
+        public abstract void update(String nName,string nUser,string nMail,string nPass);
         public abstract List<List<string>> GetSchedule();
         public static User getUserByID(int userID)
         {
@@ -68,16 +68,16 @@ namespace ELearn
             ELearn.User usr=null ;
                 if (dr["userType"].ToString().Equals("student"))
                 {
-                    usr= new Student(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, Convert.ToInt32(dr["classID"]));
+                    usr = new Student(Convert.ToInt32(dr["id"]), userName, dr["password"].ToString(), dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, Convert.ToInt32(dr["classID"]));
                 }
                 else if (dr["userType"].ToString().Equals("teacher"))
                 {
-                    usr= new Teacher(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now);
+                    usr = new Teacher(Convert.ToInt32(dr["id"]), userName, dr["password"].ToString(), dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now);
 
                 }
                 else if (dr["userType"].ToString().Equals("staff"))
                 {
-                    usr= new Staff(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, true);
+                    usr = new Staff(Convert.ToInt32(dr["id"]), userName, dr["password"].ToString(), dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, true);
                 }
                 dr.Close();
                 SqlCommand newCMD = new SqlCommand();

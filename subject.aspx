@@ -18,8 +18,7 @@
             <li><a href="home.aspx">Home</a></li>
             <li><a href="schedule.aspx">Schedule</a></li>
             <li><a href="Messages.aspx">Messages</a></li>
-
-            <li><a href="user.aspx">Ahmed</a></li>
+            <li><a href="user.aspx"><%=((ELearn.User)Session["user"]).username %></a></li>
             <li><a href="logout.aspx">Logout</a></li>
         </ul>
         <div class="clr"></div>
@@ -43,7 +42,8 @@
                         <tbody>
                             <tr>
                                 <td>22-05-2014</td>
-                                <td><button  onclick="viewVideo('23')">View</button></td>
+                                <td>
+                                    <button onclick="viewVideo('23')">View</button></td>
                                 <td><a href="notes.aspx">Download</a></td>
                             </tr>
                             <%if (Request.QueryString["type"] == "Teacher")

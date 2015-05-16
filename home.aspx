@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Stylesheets" runat="server"></asp:Content>
 <asp:Content ID="menu" ContentPlaceHolderID="ContentPlaceHolder3" runat="server">
-    
+
     <div class="menu_nav">
         <ul>
             <li><a href="home.aspx">Home</a></li>
@@ -19,13 +19,13 @@
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <%
-        // temp data for testing
-        //Level tempLevel = new Level(1, "first grade");
-        //ClassRoom tempClassRoom = new ClassRoom(1, tempLevel);
-        //Student tempStudent = new Student(1, "username", "password", "name", "mail", DateTime.UtcNow, tempClassRoom);
-        //Teacher tempTeacher = new Teacher(2, "username", "password", "name", "mail", DateTime.UtcNow);
-        //Session.Add("userType", "teacher");
-        //Session.Add("user", tempTeacher);
+                    // temp data for testing
+                    //Level tempLevel = new Level(1, "first grade");
+                    //ClassRoom tempClassRoom = new ClassRoom(1, tempLevel);
+                    //Student tempStudent = new Student(1, "username", "password", "name", "mail", DateTime.UtcNow, tempClassRoom);
+                    //Teacher tempTeacher = new Teacher(2, "username", "password", "name", "mail", DateTime.UtcNow);
+                    //Session.Add("userType", "teacher");
+                    //Session.Add("user", tempTeacher);
     %>
 
     <div class="content">
@@ -33,6 +33,8 @@
             <div class="mainbar">
                 <%if ((string)Session["userType"] == "staff") // admin see all levels all subjects
                   {
+                      Response.Redirect("admin.aspx");
+                      /*
                       foreach (Level level in Level.GetAllLevels())
                       {%>
                 <div class="article">
@@ -44,6 +46,7 @@
                     <%}%>
                 </div>
                 <%}
+                  */
                   }
                   else if (((string)Session["userType"]).Equals("student")) // student see his class his subjects
                   {
@@ -80,7 +83,7 @@
                       Response.Redirect("Default.aspx");
                   }%>
             </div>
-            
+
             <div class="clr"></div>
         </div>
     </div>

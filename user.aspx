@@ -9,12 +9,11 @@
 
 <asp:Content ID="menu" ContentPlaceHolderID="ContentPlaceHolder3" runat="server">
     <div class="menu_nav">
-        <ul>
+         <ul>
             <li><a href="home.aspx">Home</a></li>
             <li><a href="schedule.aspx">Schedule</a></li>
             <li><a href="Messages.aspx">Messages</a></li>
-
-            <li><a href="user.aspx">User1234</a></li>
+            <li><a href="user.aspx"><%=((ELearn.User)Session["user"]).username %></a></li>
             <li><a href="logout.aspx">Logout</a></li>
         </ul>
         <div class="clr"></div>
@@ -28,18 +27,18 @@
                 <div class="article">
 
                     <ul class="list-group">
-                        <%ELearn.User usr=(ELearn.User)Session["user"]; %>
-  <li class="list-group-item">Username: <%= usr.username%></li>
-  <li class="list-group-item">Name: <%=usr.name %></li>
-  <li class="list-group-item">E-mail: <%=usr.mail %></li>
-  <li class="list-group-item">Last Seen: <%=usr.lastSeen %></li>
-</ul>
+                        <%ELearn.User usr = (ELearn.User)Session["user"]; %>
+                        <li class="list-group-item">Username: <%= usr.username%></li>
+                        <li class="list-group-item">Name: <%=usr.name %></li>
+                        <li class="list-group-item">E-mail: <%=usr.mail %></li>
+                        <li class="list-group-item">Last Seen: <%=usr.lastSeen %></li>
+                    </ul>
 
 
                 </div>
             </div>
             <div class="sidebar">
-                
+
                 <div class="gadget">
                     <h2></h2>
                     <div class="clr"></div>
@@ -53,30 +52,30 @@
         </div>
         <div id="update_modal" class="modal fade">
             <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <form runat="server" class="register">
-                        
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Update Profile</h4>
+                <form runat="server" class="register">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Update Profile</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <asp:TextBox runat="server" CssClass="register-input" ID="Name" Text="" />
+                            <asp:TextBox runat="server" CssClass="register-input" ID="Username" Text="" />
+                            <asp:TextBox runat="server" CssClass="register-input" ID="Emailaddress" Text="" />
+                            <asp:TextBox runat="server"  CssClass="register-input" ID="Password" Text="" />
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <asp:Button runat="server" ID="save" CssClass="btn btn-primary" Text="Save changes" OnClick="SaveClicked"></asp:Button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                            
-                            <asp:TextBox  runat="server"   CssClass="register-input" id="Name" Text ="<%= usr.name%>" />
-                            <asp:TextBox runat="server"  CssClass="register-input" id="Username" Text="<%= usr.username%>" />
-                            <asp:TextBox runat="server"  CssClass="register-input" id="Emailaddress" Text="<%= usr.mail%>"/>
-                            <asp:TextBox runat="server" TextMode ="password" CssClass="register-input" id="Password"  Text="<%= usr.password%>"/>
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <asp:Button runat="server" ID="save"  CssClass="btn btn-primary" Text="Save changes"></asp:Button>
-                    </div>
-                  </form>
-                </div>
+
+                </form>
             </div>
         </div>
-
     </div>
 </asp:Content>
 

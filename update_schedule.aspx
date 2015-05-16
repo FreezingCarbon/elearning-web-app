@@ -11,11 +11,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div class="menu_nav">
-        <ul>
-            <li><a href="home.aspx">Home</a></li>
+       <ul>
+            <li><a href="admin.aspx">Home</a></li>
             <li><a href="schedule.aspx">Schedule</a></li>
             <li><a href="Messages.aspx">Messages</a></li>
-            <li><a href="user.aspx">Ahmed</a></li>
+            <li><a href="user.aspx"><%=((ELearn.User)Session["user"]).username %></a></li>
             <li><a href="logout.aspx">Logout</a></li>
         </ul>
     </div>

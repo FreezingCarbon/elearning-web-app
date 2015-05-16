@@ -15,7 +15,20 @@ public class Level
         this.levelID = levelID;
         this.levelName = levelName;
     }
-
+    public Level( string levelName)
+    {
+        this.levelName = levelName;
+    }
+    public void insert()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "insert into [level] (name) OUTPUT INSERTED.id values ('" + levelName + "')";
+        levelID = Convert.ToInt32(cmd.ExecuteScalar());
+        cmd.Connection.Close();
+   
+    }
     static public Level GetLevelById(int levelId)
     {
         SqlCommand cmd = new SqlCommand();
@@ -43,8 +56,8 @@ public class Level
         List<Level> allLevels = new List<Level>();
         while (dataReader.Read())
         {
-            Level level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
-                                    dataReader.GetString(1));
+            Level level = new Level(Convert.ToInt32(dataReader.GetValue(1)),
+                                    dataReader.GetString(0));
             allLevels.Add(level);
         }
         cmd.Connection.Close();

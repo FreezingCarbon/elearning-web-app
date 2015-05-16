@@ -85,8 +85,8 @@ public class ClassRoom
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "insert into Class values( " + classRoomID + " , " + levelID + " )";
-        cmd.ExecuteNonQuery();
+        cmd.CommandText = "insert into Class (levelID) OUTPUT INSERTED.id values (" + levelID + ")";
+        classRoomID = Convert.ToInt32(cmd.ExecuteScalar());
         cmd.Connection.Close();
     }
 
