@@ -52,13 +52,20 @@ public class Message
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = @"insert into Message values( " + 
-                            messageID + " , " + 
+        cmd.CommandText = @"insert into Message  ([senderID],[subject],[body],[time]) 	OUTPUT INSERTED.id values( " + 
                             senderID + " , '" + 
                             subject + "' , '" + 
                             body + "' , '" + 
                             time + "'  )";
-        cmd.ExecuteNonQuery();
+        messageID = Convert.ToInt32( cmd.ExecuteScalar());
+        
+        foreach (int usr in recieverIDs)
+        {
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.Connection = con;
+            cmd2.CommandText = @"INSERT INTO [dbo].[Recieve]([recipientID],[messageID]) VALUES("+usr+","+messageID+")";
+            cmd2.ExecuteNonQuery();
+        }
         con.Close();
 
         return messageID;
@@ -75,18 +82,18 @@ public class Message
         {
             SqlCommand cmd2 = new SqlCommand();
             cmd2.Connection = con;
-            cmd2.CommandText = "select recipientId from receive where messageId = " + dataReader.GetString(0);
-            SqlDataReader dataReader2 = cmd.ExecuteReader();
+            cmd2.CommandText = "select recipientId from [Recieve] where messageId = " + dataReader["id"].ToString();
+            SqlDataReader dataReader2 = cmd2.ExecuteReader();
             List<int> recieverIDs = new List<int>();
             while (dataReader2.Read())
                 recieverIDs.Add(Convert.ToInt32(dataReader.GetValue(0)));
 
-            Message message = new Message(dataReader.GetString(2),
-                                          dataReader.GetString(3),
-                                          dataReader.GetDateTime(4),
-                                          Convert.ToInt32(dataReader.GetValue(1)),
+            Message message = new Message(dataReader["subject"].ToString(),
+                                          dataReader["body"].ToString(),
+                                          Convert.ToDateTime(dataReader["time"]),
+                                          Convert.ToInt32(dataReader["senderID"]),
                                           recieverIDs);
-            message.messageID = Convert.ToInt32(dataReader.GetValue(0));
+            message.messageID = Convert.ToInt32(dataReader["id"]);
             messages.Add(message);
         }
         cmd.Connection.Close();
@@ -101,17 +108,19 @@ public class Message
         cmd.CommandText = "select messageID from Recieve where recipientID = " + recieverID;
         SqlDataReader dataReader = cmd.ExecuteReader();
         List<Message> messages = new List<Message>();
+
         while(dataReader.Read()){
             SqlCommand cmd2 = new SqlCommand();
             cmd2.Connection = con;
-            cmd2.CommandText = "select * from Message where messageID = " + dataReader.GetInt32(0);
+            cmd2.CommandText = "select * from Message where id = " + dataReader["messageID"].ToString();
             SqlDataReader dataReader2 = cmd2.ExecuteReader();
 
-            Message message = new Message(dataReader2.GetString(2),
-                                       dataReader2.GetString(3),
-                                       dataReader2.GetDateTime(4),
-                                       Convert.ToInt32(dataReader.GetValue(1)));
-            message.messageID = Convert.ToInt32(dataReader.GetValue(0));
+            Message message = new Message(dataReader["subject"].ToString(),
+                                          dataReader["body"].ToString(),
+                                          Convert.ToDateTime(dataReader["time"]),
+                                          Convert.ToInt32(dataReader["senderID"])
+                                          );
+            message.messageID = Convert.ToInt32(dataReader["id"]);
             messages.Add(message);
         }
 

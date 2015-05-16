@@ -36,19 +36,26 @@ namespace ELearn
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.HasRows)
             {   dr.Read();
+            ELearn.User usr=null ;
                 if (dr["userType"].ToString().Equals("student"))
                 {
-                    return new Student(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, Convert.ToInt32(dr["classID"]));
+                    usr= new Student(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, Convert.ToInt32(dr["classID"]));
                 }
                 else if (dr["userType"].ToString().Equals("teacher"))
                 {
-                    return new Teacher(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now);
+                    usr= new Teacher(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now);
 
                 }
                 else if (dr["userType"].ToString().Equals("staff"))
                 {
-                    return new Staff(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, true);
+                    usr= new Staff(Convert.ToInt32(dr["id"]), userName, "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, true);
                 }
+                dr.Close();
+                SqlCommand newCMD = new SqlCommand();
+                newCMD.Connection = con;
+                newCMD.CommandText = "update [User] set lastSeen = '" + DateTime.Now.ToString() + "' where userName= '" + userName + "'";
+                newCMD.ExecuteNonQuery();
+                return usr;
             }
             return null;
         }
@@ -58,7 +65,7 @@ namespace ELearn
             SqlCommand cmd = new SqlCommand();
             SqlConnection con = DatabaseConnectionFactory.GetConnection();
             cmd.Connection = con;
-            cmd.CommandText = "select * from( [User] inner join Teaches on teacherID=id) where Teaches.classID = " + classID.ToString();
+            cmd.CommandText = "select * from [User] ";
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {

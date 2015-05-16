@@ -14,7 +14,20 @@ public class Staff : ELearn.User
     {
         this.isAdmin = isAdmin;
     }
+    public void update()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "update [User] set userName='" + username + "','"
+                            + password + "','"
+                            + name + "','"
+                            + mail + "' where id=" + userID;
+        ;
+        cmd.ExecuteNonQuery();
 
+
+    }
     static public Staff GetUserById(int staffId)
     {
         SqlCommand cmd = new SqlCommand();

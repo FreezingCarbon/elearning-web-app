@@ -9,6 +9,9 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if(((ELearn.User)Session["user"])!=null){
+            Response.Redirect("home.aspx");
+        }
         List<ClassRoom> classes = ClassRoom.GetAllClassRooms();
         foreach (ClassRoom cls in classes)
         {

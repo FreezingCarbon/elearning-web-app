@@ -52,7 +52,7 @@
                                        { 
                                     %>
                                     <a href="#" class="list-group-item">
-                                        <span class="name" style="min-width: 120px; display: inline-block;"><%=msg.subject %></span> <span class="">This is big title</span>
+                                        <span class="name" style="min-width: 120px; display: inline-block;"></span> <span class=""><%=msg.subject %></span>
                                         <span class="text-muted" style="font-size: 11px;"><%=msg.body %></span>
                                         <span class="badge"><%=msg.time %></span>
 
@@ -67,7 +67,7 @@
                                        { 
                                     %>
                                     <a href="#" class="list-group-item">
-                                        <span class="name" style="min-width: 120px; display: inline-block;"><%=msg.subject %></span> <span class="">This is big title</span>
+                                        <span class="name" style="min-width: 120px; display: inline-block;"></span> <span class=""><%=msg.subject %></span>
                                         <span class="text-muted" style="font-size: 11px;"><%=msg.body %></span>
                                         <span class="badge"><%=msg.time %></span>
 
@@ -99,10 +99,6 @@
                                     <label>To:</label>
                                     <asp:ListBox ID="list1" runat="server" class="form-control " Height="200" name="to" SelectionMode="Multiple">
 
-                                        <asp:ListItem Value="112">Amgad Mohamed Hussien</asp:ListItem>
-                                        <asp:ListItem Value="113">Saab</asp:ListItem>
-                                        <asp:ListItem Value="114">Opel</asp:ListItem>
-                                        <asp:ListItem Value="115">Audi</asp:ListItem>
                                     </asp:ListBox>
                                 </div>
                                 <div class="col-xs-7 form-group">

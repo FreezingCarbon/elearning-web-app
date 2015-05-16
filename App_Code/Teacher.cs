@@ -35,6 +35,21 @@ public class Teacher : ELearn.User
         return teacher;
     }
 
+    public void update()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "update [User] set userName='" + username + "','"
+                            + password + "','"
+                            + name + "','"
+                            + mail + "' where id=" + userID;
+                          ;
+        cmd.ExecuteNonQuery();
+        
+
+    }
+
     public void Insert()
     {
         SqlCommand cmd = new SqlCommand();
@@ -86,6 +101,33 @@ public class Teacher : ELearn.User
 
         return subjects;
     }
+    static public List<ClassRoom> GetTeacherClassRooms(int teacherID)
+    {
+        List<ClassRoom> classes = new List<ClassRoom>();
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from( Class inner join Teaches on classID=id) where Teaches.teacherID = "+teacherID.ToString();
+        SqlDataReader dr = cmd.ExecuteReader();
+        while (dr.Read())
+        {
+            classes.Add(new ClassRoom(Convert.ToInt32(dr["id"]), Convert.ToInt32(dr["levelID"])));
+        }
+        return classes;
+    }
+    
+    static public List<Student> GetTeacherStudents(int teacherID)
+    {
+        List<ClassRoom> classes = GetTeacherClassRooms(teacherID);
+        List<Student> students = new List<Student>();
+        foreach (ClassRoom cls in classes)
+        {
+
+            students.AddRange(ClassRoom.GetAllStudentInClassRooms(cls.classRoomID));
+        }
+        return students;
+    }
+    
 
     public override List<List<string>> GetSchedule()
     {

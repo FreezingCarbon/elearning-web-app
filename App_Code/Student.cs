@@ -26,7 +26,20 @@ public class Student : ELearn.User
             isActive = false;
         }
     }
+    public void update()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "update [User] set userName='" + username + "','"
+                            + password + "','"
+                            + name + "','"
+                            + mail + "' where id=" + userID;
+        ;
+        cmd.ExecuteNonQuery();
 
+
+    }
     public Student(int userID, string username, string password, string name, string mail,
         DateTime lastSeen, int classRoomID)
         : base(userID, username, password, name, mail, lastSeen)

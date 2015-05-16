@@ -62,8 +62,8 @@ public class Level
         List<Subject> subjects = new List<Subject>();
         while (dataReader.Read())
         {
-            Subject subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
-                                          dataReader.GetString(2),
+            Subject subject = new Subject(Convert.ToInt32(dataReader["id"]),
+                                          dataReader["title"].ToString(),
                                           levelID);
             subjects.Add(subject);
         }

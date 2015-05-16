@@ -47,7 +47,7 @@
                   }
                   else if (((string)Session["userType"]).Equals("student")) // student see his class his subjects
                   {
-                      ClassRoom classRoom = ((Student)Session["user"]).GetClassRoom(); %>
+                      ClassRoom classRoom = ((Student)Session["user"]).GetClassRoom();  %>
                 <div class="article">
                     <h2><span>Class <%=classRoom.classRoomID%></span></h2>
                     <div class="clr"></div>
