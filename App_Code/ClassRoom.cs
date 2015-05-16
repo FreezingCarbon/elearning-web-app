@@ -163,8 +163,14 @@ public class ClassRoom
         cmd.Connection.Close();
         return schedule;
     }
-    public static void assignTeacher(int classRoomID,int teacherID,int subjectID)
-    {
 
+    public static void assignTeacher(int classRoomID, int teacherID, int subjectID)
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "insert into Teaches values (" + teacherID + "," + subjectID + "," + classRoomID + ")";
+        cmd.ExecuteNonQuery();
+        cmd.Connection.Close();
     }
 }

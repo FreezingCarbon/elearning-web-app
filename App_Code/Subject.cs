@@ -56,6 +56,20 @@ public class Subject
 
     static public List<Subject> getAllSubjects()
     {
-        return new List<Subject>();
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from Subject";
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        List<Subject> subjects = new List<Subject>();
+        while (dataReader.Read())
+        {
+            subjects.Add(new Subject(Convert.ToInt32(dataReader["id"]), 
+                                     dataReader["title"].ToString(),
+                                     Convert.ToInt32(dataReader["levelID"])));
+        }
+
+        cmd.Connection.Close();
+        return subjects;
     }
 }
