@@ -39,8 +39,8 @@ public class Level
         Level level = null;
         if (dataReader.Read())
         {
-            level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
-                                  dataReader.GetString(1));
+            level = new Level(Convert.ToInt32(dataReader["id"]),
+                                  dataReader["name"].ToString());
         }
         cmd.Connection.Close();
         return level;
@@ -56,8 +56,8 @@ public class Level
         List<Level> allLevels = new List<Level>();
         while (dataReader.Read())
         {
-            Level level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
-                                    dataReader.GetString(1));
+            Level level = new Level(Convert.ToInt32(dataReader["id"]),
+                                  dataReader["name"].ToString());
             allLevels.Add(level);
         }
         //cmd.Connection.Close();
