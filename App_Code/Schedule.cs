@@ -11,10 +11,10 @@ public class Schedule
     public int classRoomID;
     public int subjectID;
     public string day;
-    public DateTime start;
-    public DateTime end;
+    public TimeSpan start;
+    public TimeSpan end;
 
-    public Schedule(int scheduleID, string day, DateTime start, DateTime end, ClassRoom classRoom, Subject subject)
+    public Schedule(int scheduleID, string day, TimeSpan start, TimeSpan end, ClassRoom classRoom, Subject subject)
     {
         this.scheduleID = scheduleID;
         this.day = day;
@@ -24,7 +24,7 @@ public class Schedule
         this.subjectID = subject.subjectID;
     }
 
-    private Schedule(int scheduleID, string day, DateTime start, DateTime end, int classRoomID, int subjectID)
+    private Schedule(int scheduleID, string day, TimeSpan start, TimeSpan end, int classRoomID, int subjectID)
     {
         this.scheduleID = scheduleID;
         this.day = day;
@@ -45,8 +45,8 @@ public class Schedule
         if(dataReader.Read())
             schedule = new Schedule(Convert.ToInt32(dataReader.GetValue(0)),
                                     dataReader.GetString(3),
-                                    dataReader.GetDateTime(4),
-                                    dataReader.GetDateTime(5),
+                                    dataReader.GetTimeSpan(4),
+                                    dataReader.GetTimeSpan(5),
                                     Convert.ToInt32(dataReader.GetValue(2)),
                                     Convert.ToInt32(dataReader.GetValue(1)));
         cmd.Connection.Close();
@@ -92,12 +92,12 @@ public class Schedule
         SqlDataReader dataReader = cmd.ExecuteReader();
         Schedule schedule = null;
         if (dataReader.Read())
-            schedule = new Schedule(Convert.ToInt32(dataReader["id"]),
-                                    dataReader["sessionDay"].ToString(),
-                                    Convert.ToDateTime(dataReader["startTime"]),
-                                     Convert.ToDateTime(dataReader["endTime"]),
-                                   classId,
-                                    subjectId);
+            schedule = new Schedule(Convert.ToInt32(dataReader.GetValue(0)),
+                                    dataReader.GetString(3),
+                                    dataReader.GetTimeSpan(4),
+                                    dataReader.GetTimeSpan(5),
+                                    Convert.ToInt32(dataReader.GetValue(2)),
+                                    Convert.ToInt32(dataReader.GetValue(1)));
         cmd.Connection.Close();
         return schedule;
     }
