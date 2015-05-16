@@ -16,6 +16,7 @@ public partial class admin : System.Web.UI.Page
             List<ClassRoom> clss = ClassRoom.GetAllClassRooms();
             List<Teacher> tchrs = Teacher.getAllTeachers();
             List<ELearn.User> usrs = ELearn.User.getAllUsers();
+            List<Subject> subs = Subject.getAllSubjects();
             
                // throw new Exception(lvls[(lvls.Count) - 1].levelName);
             grades.Items.Clear();
@@ -31,15 +32,21 @@ public partial class admin : System.Web.UI.Page
                 if (lvl != null) { lname = lvl.levelName; }
                 else { lname = cls.levelID.ToString(); }
                 classes.Items.Add(new ListItem(lname + " - " + cls.classRoomID.ToString(), cls.classRoomID.ToString()));
+                AssignCList.Items.Add(new ListItem(lname + " - " + cls.classRoomID.ToString(), cls.classRoomID.ToString()));
 
             }
             foreach (Teacher tchr in tchrs)
             {
                 teachers.Items.Add(new ListItem(tchr.name, tchr.userID.ToString()));
+                AssignTList.Items.Add(new ListItem(tchr.name, tchr.userID.ToString()));
             }
             foreach (ELearn.User usr in usrs)
             {
                 viewList.Items.Add(new ListItem(usr.name, usr.userID.ToString()));
+            }
+            foreach (Subject sub in subs)
+            {
+                AssignSList.Items.Add(new ListItem(sub.title, sub.subjectID.ToString()));
             }
         }   
     }
@@ -85,6 +92,10 @@ public partial class admin : System.Web.UI.Page
     {
         Session["viewUser"] = ELearn.User.getUserByID(Convert.ToInt32(viewList.SelectedValue));
         Response.Redirect("viewuser.aspx");
+    }
+    protected void assignTeacher_Click(object sender, EventArgs e)
+    {
+        ClassRoom.assignTeacher(Convert.ToInt32(AssignCList.SelectedValue), Convert.ToInt32(AssignTList.SelectedValue), Convert.ToInt32(AssignSList.SelectedValue));
     }
     
 }

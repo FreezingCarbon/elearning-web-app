@@ -163,4 +163,8 @@ public class ClassRoom
         cmd.Connection.Close();
         return schedule;
     }
+    public static void assignTeacher(int classRoomID,int teacherID,int subjectID)
+    {
+
+    }
 }

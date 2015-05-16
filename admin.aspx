@@ -138,6 +138,28 @@
                                 </table>
                             </div>
                         </div>
+                         <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Assign Teacher</h4>
+                            </div>
+                            <div class="panel-body form-horizontal">
+                                <label >Class:</label>
+                                <asp:ListBox runat="server" ID="AssignCList"  CssClass="form-control" >
+
+                                </asp:ListBox>
+                                <label >Subject:</label>
+                                <asp:ListBox runat="server" ID="AssignSList"  CssClass="form-control" >
+
+                                </asp:ListBox>
+                                <label >Teacher:</label>
+                                <asp:ListBox runat="server" ID="AssignTList"  CssClass="form-control" >
+
+                                </asp:ListBox>
+                                <asp:Button CssClass="btn-info" Text="Assign Teacher" runat="server" ID="AssignTeacher" OnClick="assignTeacher_Click" />
+                   
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>

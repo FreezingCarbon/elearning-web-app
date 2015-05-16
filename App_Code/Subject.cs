@@ -53,4 +53,9 @@ public class Subject
         cmd.ExecuteNonQuery();
         cmd.Connection.Close();
     }
+
+    static public List<Subject> getAllSubjects()
+    {
+        return new List<Subject>();
+    }
 }
