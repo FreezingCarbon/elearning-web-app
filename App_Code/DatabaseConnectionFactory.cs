@@ -16,7 +16,7 @@ public class DatabaseConnectionFactory
 
     static public SqlConnection GetConnection()
     {
-        SqlConnection con = new SqlConnection(@"server = AMGAD\SQLEXPRESS; Database = ELearning_ERP; trusted_connection=true; MultipleActiveResultSets=True");
+        SqlConnection con = new SqlConnection(@"server = .; Database = ELearning_ERP; trusted_connection=true; MultipleActiveResultSets=True");
         con.Open();
         return con;
     }

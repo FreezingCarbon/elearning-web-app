@@ -61,7 +61,7 @@ public class MySession
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = @"select Session.id, Session.scheduleId, Session.date, Session.notesLink, Session.videoLink
+        cmd.CommandText = @"select Session.id, Session.scheduleId, Session.sesstionDate, Session.notesLink, Session.videoLink
                             from Session inner join Schedule
                                 on Session.scheduleId = Schedule.Id
                             where Schedule.subjectId = " + subjectId + @"

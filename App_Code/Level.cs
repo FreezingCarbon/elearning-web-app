@@ -39,8 +39,8 @@ public class Level
         Level level = null;
         if (dataReader.Read())
         {
-            level = new Level(Convert.ToInt32(dataReader.GetValue(1)),
-                                  dataReader.GetString(0));
+            level = new Level(Convert.ToInt32(dataReader.GetValue(0)),
+                                  dataReader.GetString(1));
         }
         cmd.Connection.Close();
         return level;
