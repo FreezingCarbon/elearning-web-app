@@ -38,6 +38,10 @@ public class Student : ELearn.User
         ;
         cmd.ExecuteNonQuery();
 
+        this.username = nUser;
+        this.name = nName;
+        this.mail = nMail;
+        this.password = nPass;
 
     }
     public Student(int userID, string username, string password, string name, string mail,

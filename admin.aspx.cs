@@ -7,19 +7,25 @@ using System.Web.UI.WebControls;
 
 public partial class admin : System.Web.UI.Page
 {
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            List<Level>lvls=Level.GetAllLevels();
+            List<Level> lvls = Level.GetAllLevels();
             List<ClassRoom> clss = ClassRoom.GetAllClassRooms();
             List<Teacher> tchrs = Teacher.getAllTeachers();
             List<ELearn.User> usrs = ELearn.User.getAllUsers();
+            
+               // throw new Exception(lvls[(lvls.Count) - 1].levelName);
+            grades.Items.Clear();
+
             foreach (Level lvl in lvls)
             {
                 grades.Items.Add(new ListItem(lvl.levelName, lvl.levelID.ToString()));
             }
-            foreach (ClassRoom cls in clss){
+            foreach (ClassRoom cls in clss)
+            {
                 Level lvl = Level.GetLevelById(cls.levelID);
                 string lname = "";
                 if (lvl != null) { lname = lvl.levelName; }
@@ -29,25 +35,31 @@ public partial class admin : System.Web.UI.Page
             }
             foreach (Teacher tchr in tchrs)
             {
-                teachers.Items.Add(new ListItem(tchr.name,tchr.userID.ToString()));
+                teachers.Items.Add(new ListItem(tchr.name, tchr.userID.ToString()));
             }
             foreach (ELearn.User usr in usrs)
             {
                 viewList.Items.Add(new ListItem(usr.name, usr.userID.ToString()));
             }
-            
-        }
+        }   
     }
     protected void createGeade_Click(object sender, EventArgs e)
     {
         Level lvl = new Level(GradeName.Text);
         lvl.insert();
+        grades.Items.Add(new ListItem(GradeName.Text,lvl.levelID.ToString()));
     }
     protected void createClass_Click(object sender, EventArgs e)
     {
 
         ClassRoom cls = new ClassRoom(0, Convert.ToInt32(grades.SelectedValue));
         cls.Insert();
+        Level lvl = Level.GetLevelById(cls.levelID);
+        string lname = "";
+        if (lvl != null) { lname = lvl.levelName; }
+        else { lname = cls.levelID.ToString(); }
+        classes.Items.Add(new ListItem(lname + " - " + cls.classRoomID.ToString(), cls.classRoomID.ToString()));
+
     }
     protected void createClassSched_Click(object sender, EventArgs e)
     {
@@ -68,6 +80,11 @@ public partial class admin : System.Web.UI.Page
             tchr.Insert();
 
         }
+    }
+    protected void viewAcc_Click(object sender, EventArgs e)
+    {
+        Session["viewUser"] = ELearn.User.getUserByID(Convert.ToInt32(viewList.SelectedValue));
+        Response.Redirect("viewuser.aspx");
     }
     
 }

@@ -60,7 +60,7 @@ public class Level
                                     dataReader.GetString(0));
             allLevels.Add(level);
         }
-        cmd.Connection.Close();
+        //cmd.Connection.Close();
 
         return allLevels;
     }

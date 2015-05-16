@@ -27,6 +27,10 @@ public class Staff : ELearn.User
         cmd.ExecuteNonQuery();
 
 
+        this.username = nUser;
+        this.name = nName;
+        this.mail = nMail;
+        this.password = nPass;
     }
 
     public void Insert()

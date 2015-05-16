@@ -22,6 +22,26 @@ public class ClassRoom
         this.classRoomID = classRoomID;
         this.levelID = levelID;
     }
+    public int getActiveByID(int id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "  select count(*) from [dbo].[User] where   DATEDIFF(day, [lastSeen],GETDATE() ) < 14 and [classID]=" + id.ToString();
+        int cnt = Convert.ToInt32(cmd.ExecuteScalar());
+        cmd.Connection.Close();
+        return cnt;
+    }
+    public int getTotalByID(int id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "  select count(*) from [dbo].[User] where [classID]=" + id.ToString();
+        int cnt = Convert.ToInt32(cmd.ExecuteScalar());
+        cmd.Connection.Close();
+        return cnt;
+    }
     static public List<Student> GetAllStudentInClassRooms(int classID)
     {
         List<Student> students = new List<Student>();
@@ -113,15 +133,15 @@ public class ClassRoom
         {
             schedule.Add(new List<string>(6));
             for (int j = 0; j < 6; ++j)
-                schedule[j].Add("");
+                schedule[i].Add("");
         }
 
         Hashtable hashTable1 = new Hashtable();
-        hashTable1.Add(10, 0);
-        hashTable1.Add(11, 1);
-        hashTable1.Add(12, 2);
-        hashTable1.Add(1, 3);
-        hashTable1.Add(2, 4);
+        hashTable1.Add("10:00:00", 0);
+        hashTable1.Add("11:00:00", 1);
+        hashTable1.Add("12:00:00", 2);
+        hashTable1.Add("01:00:00", 3);
+        hashTable1.Add("02:00:00", 4);
 
         Hashtable hashTable2 = new Hashtable();
         hashTable2.Add("saturday", 0);
@@ -133,9 +153,10 @@ public class ClassRoom
 
         while (dataReader.Read())
         {
-            DateTime startTime = dataReader.GetDateTime(0);
-            String sessionDay = dataReader.GetString(0).ToLower();
-            schedule[(int)hashTable1[startTime.Hour]][(int)hashTable2[sessionDay]] = "Class: " + dataReader.GetString(2) +
+            String startTime = dataReader.GetValue(0).ToString();
+            String sessionDay = dataReader.GetString(1).ToLower();
+            //throw new Exception(startTime);
+            schedule[(int)hashTable1[startTime]][(int)hashTable2[sessionDay]] = "Class: " + dataReader.GetValue(2).ToString() +
                                                                                      "Subject: " + dataReader.GetString(3);
         }
 

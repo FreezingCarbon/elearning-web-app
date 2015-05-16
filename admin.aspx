@@ -24,32 +24,32 @@
                             <div class="panel-heading">
                                 <h4>Create Grade</h4>
                             </div>
-                            <form class="panel-body form-horizontal">
+                            <div class="panel-body form-horizontal">
                                 <asp:TextBox CssClass="form-control" ID="GradeName" runat="server"  placeholder="Name"></asp:TextBox>
                                 <asp:Button CssClass="btn-info" Text="Create" runat="server" ID="createGeade" OnClick="createGeade_Click" />
                                  
-                            </form>
+                            </div>
 
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4>Create New Class</h4>
                             </div>
-                            <form class="panel-body form-horizontal">
+                            <div class="panel-body form-horizontal">
                                 <asp:ListBox runat="server" ID="grades" CssClass="form-control" >
 
                                 </asp:ListBox>
                                
 
                    <asp:Button CssClass="btn-info" Text="Create" runat="server" ID="createClass" OnClick="createClass_Click" />
-                                         </form>
+                                         </div>
 
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4>Create/Update Scheduale</h4>
                             </div>
-                            <form class="panel-body form-horizontal">
+                            <div class="panel-body form-horizontal">
                                 <asp:ListBox runat="server" ID="classes" CssClass="form-control" >
 
                                 </asp:ListBox>
@@ -57,14 +57,14 @@
 
                                 <asp:Button CssClass="btn-info" Text="Class Schedule" runat="server" ID="CCSched" OnClick="createClassSched_Click" />
                    
-                            </form>
-                            <form class="panel-body form-horizontal">
+                            </div>
+                            <div class="panel-body form-horizontal">
                                <asp:ListBox runat="server" ID="teachers" CssClass="form-control" >
 
                                 </asp:ListBox>
                                <asp:Button CssClass="btn-info" Text="Teacher Schedule" runat="server" ID="CTSched" OnClick="createTeachSched_Click" />
                    
-                            </form>
+                            </div>
 
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                             <div class="panel-heading">
                                 <h4>Create New Account</h4>
                             </div>
-                            <form class="panel-body form-horizontal" method="post">
+                            <div class="panel-body form-horizontal">
                                 <asp:TextBox ID="CAID" CssClass="register-input" runat="server" placeholder="Name"></asp:TextBox>
                                  <asp:TextBox ID="CAUN" CssClass="register-input" runat="server" placeholder="Username"></asp:TextBox>
                                 <asp:TextBox ID="CAMAIL" CssClass="register-input" runat="server" placeholder="Email address"></asp:TextBox>
@@ -84,19 +84,19 @@
                                 </asp:ListBox>
                                <asp:Button CssClass="btn-info" Text="Create Account" runat="server" ID="CAbut" OnClick="createAcc_Click" />
                    
-                            </form>
+                            </div>
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4>View Student/Teacher Page</h4>
                             </div>
-                            <form class="panel-body form-horizontal">
+                            <div class="panel-body form-horizontal">
                                             <asp:ListBox runat="server" ID="viewList" CssClass="form-control" >
 
                                 </asp:ListBox>
-                               <asp:Button CssClass="btn-info" Text=" View page" runat="server" ID="viewBut" OnClick="createClass_Click" />
+                               <asp:Button CssClass="btn-info" Text=" View page" runat="server" ID="viewBut" OnClick="viewAcc_Click" />
                    
-                            </form>
+                            </div>
 
                         </div>
                     </div>
@@ -107,6 +107,7 @@
                             <div class="panel-heading">
                                 <h4>Studnets in each Class</h4>
                             </div>
+
                             <div class="panel-body">
                                 <table class="table table-hover">
                                     <tr>
@@ -115,11 +116,24 @@
                                         <th>Active</th>
                                     </tr>
                                     <tbody>
+                                  <% List<ClassRoom> clss = ClassRoom.GetAllClassRooms();
+
+                               foreach (ClassRoom cls in clss) {
+                                   int active = cls.getActiveByID(cls.classRoomID);
+                                   int total = cls.getTotalByID(cls.classRoomID);
+                                   Level lvl = Level.GetLevelById(cls.levelID);
+                                   string lname = "";
+                                   if (lvl != null) { lname = lvl.levelName; }
+                                   else { lname = cls.levelID.ToString(); }
+                                   String name = lname + " - " + cls.classRoomID.ToString();
+                                %>
+                                        
                                         <tr>
-                                            <td>Grad1-12</td>
-                                            <td>32</td>
-                                            <td>20</td>
+                                            <td><%=name %></td>
+                                            <td><%=total %></td>
+                                            <td><%=active %></td>
                                         </tr>
+                                        <%} %>
                                     </tbody>
                                 </table>
                             </div>
