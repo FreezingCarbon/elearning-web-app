@@ -52,7 +52,7 @@
                                        { 
                                     %>
                                     <a href="#" class="list-group-item">
-                                        <span class="name" style="min-width: 120px; display: inline-block;"></span> <span class=""><%=msg.subject %></span>
+                                        <span class="name" style="min-width: 120px; display: inline-block;"><%=ELearn.User.getUserByID(msg.senderID).name %></span> <span class=""><%=msg.subject %></span>
                                         <span class="text-muted" style="font-size: 11px;"><%=msg.body %></span>
                                         <span class="badge"><%=msg.time %></span>
 

@@ -9,6 +9,12 @@ public partial class Messages : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (((ELearn.User)Session["user"]) == null)
+        {
+            
+                Response.Redirect("/default.aspx");
+            
+        }
         List<ELearn.User> users = new List<ELearn.User>();
         if (((String)Session["userType"]).Equals("student")) {
             users.AddRange(ClassRoom.getClassroomTeachers(((Student)Session["user"]).classRoomID));

@@ -28,9 +28,11 @@
                 <div class="article">
 
                     <ul class="list-group">
-  <li class="list-group-item">Username: ASD232</li>
-  <li class="list-group-item">Name: Mahmoud Mohsen</li>
-  <li class="list-group-item">E-mail: Mohsen@Moh.com</li>
+                        <%ELearn.User usr=(ELearn.User)Session["user"]; %>
+  <li class="list-group-item">Username: <%= usr.username%></li>
+  <li class="list-group-item">Name: <%=usr.name %></li>
+  <li class="list-group-item">E-mail: <%=usr.mail %></li>
+  <li class="list-group-item">Last Seen: <%=usr.lastSeen %></li>
 </ul>
 
 
@@ -52,22 +54,25 @@
         <div id="update_modal" class="modal fade">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
+                    <form runat="server" class="register">
+                        
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Update Profile</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="register" action="user.aspx" method="post">
-                            <input type="text" class="register-input" placeholder="Name" value="Mohsen" />
-                            <input type="text" class="register-input" placeholder="Username" value="user123" />
-                            <input type="text" class="register-input" placeholder="Email address" value="bohsen_Elshaba7@FCI.com"/>
-                            <input type="password" class="register-input" placeholder="Password" />
-                        </form>
+                            
+                            <asp:TextBox  runat="server"   CssClass="register-input" id="Name" Text ="<%= usr.name%>" />
+                            <asp:TextBox runat="server"  CssClass="register-input" id="Username" Text="<%= usr.username%>" />
+                            <asp:TextBox runat="server"  CssClass="register-input" id="Emailaddress" Text="<%= usr.mail%>"/>
+                            <asp:TextBox runat="server" TextMode ="password" CssClass="register-input" id="Password"  Text="<%= usr.password%>"/>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <asp:Button runat="server" ID="save"  CssClass="btn btn-primary" Text="Save changes"></asp:Button>
                     </div>
+                  </form>
                 </div>
             </div>
         </div>

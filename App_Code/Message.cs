@@ -105,7 +105,7 @@ public class Message
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "select messageID from Recieve where recipientID = " + recieverID;
+        cmd.CommandText = "select messageID from Recieve where [recipientID] = " + recieverID;
         SqlDataReader dataReader = cmd.ExecuteReader();
         List<Message> messages = new List<Message>();
 
@@ -114,14 +114,15 @@ public class Message
             cmd2.Connection = con;
             cmd2.CommandText = "select * from Message where id = " + dataReader["messageID"].ToString();
             SqlDataReader dataReader2 = cmd2.ExecuteReader();
-
-            Message message = new Message(dataReader["subject"].ToString(),
-                                          dataReader["body"].ToString(),
-                                          Convert.ToDateTime(dataReader["time"]),
-                                          Convert.ToInt32(dataReader["senderID"])
+            if (dataReader2.Read()) { 
+            Message message = new Message(dataReader2["subject"].ToString(),
+                                          dataReader2["body"].ToString(),
+                                          Convert.ToDateTime(dataReader2["time"]),
+                                          Convert.ToInt32(dataReader2["senderID"])
                                           );
-            message.messageID = Convert.ToInt32(dataReader["id"]);
+            message.messageID = Convert.ToInt32(dataReader2["id"]);
             messages.Add(message);
+            }
         }
 
         cmd.Connection.Close();

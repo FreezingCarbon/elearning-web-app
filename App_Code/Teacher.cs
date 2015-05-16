@@ -188,7 +188,7 @@ public class Teacher : ELearn.User
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "select * from [User] userType = 'teacher'";
+        cmd.CommandText = "select * from [User] where userType = 'teacher'";
         SqlDataReader dr = cmd.ExecuteReader();
         while (dr.Read())
         {

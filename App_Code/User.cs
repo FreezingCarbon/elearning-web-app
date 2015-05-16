@@ -25,6 +25,35 @@ namespace ELearn
         }
 
         public abstract List<List<string>> GetSchedule();
+        public static User getUserByID(int userID)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlConnection con = DatabaseConnectionFactory.GetConnection();
+            cmd.Connection = con;
+            cmd.CommandText = "Select * from [User] where id= "+userID.ToString();
+             SqlDataReader dr = cmd.ExecuteReader();
+             if (dr.Read())
+             {
+                 ELearn.User usr = null;
+                 if (dr["userType"].ToString().Equals("student"))
+                 {
+                     usr = new Student(Convert.ToInt32(dr["id"]), dr["userName"].ToString(), "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, Convert.ToInt32(dr["classID"]));
+                 }
+                 else if (dr["userType"].ToString().Equals("teacher"))
+                 {
+                     usr = new Teacher(Convert.ToInt32(dr["id"]), dr["userName"].ToString(), "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now);
+
+                 }
+                 else if (dr["userType"].ToString().Equals("staff"))
+                 {
+                     usr = new Staff(Convert.ToInt32(dr["id"]), dr["userName"].ToString(), "", dr["name"].ToString(), dr["mail"].ToString(), DateTime.Now, true);
+                 }
+                 dr.Close();
+                 return usr;
+             }
+             return null;
+
+        }
         public static User loginUser(String userName, String password)
         {
             SqlCommand cmd = new SqlCommand();
