@@ -41,31 +41,6 @@ public class Subject
         return subject;
     }
 
-    static public List<MySession> GetSubjectSessions(int subjectId, int classId)
-    {
-        SqlCommand cmd = new SqlCommand();
-        SqlConnection con = DatabaseConnectionFactory.GetConnection();
-        cmd.Connection = con;
-        cmd.CommandText = @"select Session.id, Session.scheduleId, Session.date, Session.notesLink, Session.videoLink
-                            from Session inner join Schedule
-                                on Session.scheduleId = Schedule.Id
-                            where Schedule.subjectId = " + subjectId + @"
-                                and Schedule.classId = " + classId;
-        SqlDataReader dataReader = cmd.ExecuteReader();
-        List<MySession> sessions = new List<MySession>();
-        while (dataReader.Read())
-        {
-            //public Session(int sessionID, DateTime date, string notesLink, string videoLink, int scheduleID)
-            sessions.Add(new MySession(Convert.ToInt32(dataReader.GetValue(0)),
-                                     Convert.ToDateTime(dataReader.GetValue(2)),
-                                     dataReader.GetString(3),
-                                     dataReader.GetString(4),
-                                     Convert.ToInt32(dataReader.GetValue(1))));
-        }
-        cmd.Connection.Close();
-        return sessions;
-    }
-
     void Insert()
     {
         SqlCommand cmd = new SqlCommand();

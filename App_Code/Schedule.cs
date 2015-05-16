@@ -82,4 +82,23 @@ public class Schedule
         cmd.Connection.Close();
         return scheduleId;
     }
+
+    public static Schedule GetScheduleBySubjectAndClass(int subjectId, int classId)
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select * from Schedule where subjectId = " + subjectId + "and classId = " + classId;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        Schedule schedule = null;
+        if (dataReader.Read())
+            schedule = new Schedule(Convert.ToInt32(dataReader.GetValue(0)),
+                                    dataReader.GetString(3),
+                                    dataReader.GetDateTime(4),
+                                    dataReader.GetDateTime(5),
+                                    Convert.ToInt32(dataReader.GetValue(2)),
+                                    Convert.ToInt32(dataReader.GetValue(1)));
+        cmd.Connection.Close();
+        return schedule;
+    }
 }

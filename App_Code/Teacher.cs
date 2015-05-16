@@ -34,6 +34,32 @@ public class Teacher : ELearn.User
         cmd.Connection.Close();
         return teacher;
     }
+
+    static public Teacher GetTeacherBySubjectAndClass(int subjectId, int classId)
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = @"select [User].id, [User].username, [User].password, [User].name, [User].mail, [User].lastSeen
+                            from [User] inner join Teaches
+                                on [User].id = Teaches.teacherId
+                            where Teaches.subjectId = " + subjectId + @"
+                                and Teaches.classId = " + classId;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        Teacher teacher = null;
+        if (dataReader.Read())
+        {
+            teacher = new Teacher(Convert.ToInt32(dataReader.GetValue(0)),
+                                  dataReader.GetString(1),
+                                  dataReader.GetString(2),
+                                  dataReader.GetString(3),
+                                  dataReader.GetString(4),
+                                  dataReader.GetDateTime(5));
+        }
+        cmd.Connection.Close();
+        return teacher;
+    }
+
     public override void update(String nName, string nUser, string nMail, string nPass)
     {
         SqlCommand cmd = new SqlCommand();

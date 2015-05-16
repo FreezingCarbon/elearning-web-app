@@ -18,35 +18,12 @@
 <%-- Add content controls here --%>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <%
-                    // temp data for testing
-                    //Level tempLevel = new Level(1, "first grade");
-                    //ClassRoom tempClassRoom = new ClassRoom(1, tempLevel);
-                    //Student tempStudent = new Student(1, "username", "password", "name", "mail", DateTime.UtcNow, tempClassRoom);
-                    //Teacher tempTeacher = new Teacher(2, "username", "password", "name", "mail", DateTime.UtcNow);
-                    //Session.Add("userType", "teacher");
-                    //Session.Add("user", tempTeacher);
-    %>
-
     <div class="content">
         <div class="content_resize">
             <div class="mainbar">
                 <%if ((string)Session["userType"] == "staff") // admin see all levels all subjects
                   {
                       Response.Redirect("admin.aspx");
-                      /*
-                      foreach (Level level in Level.GetAllLevels())
-                      {%>
-                <div class="article">
-                    <h2><span><%=level.levelName%></span></h2>
-                    <div class="clr"></div>
-                    <%foreach (Subject subject in Level.GetSubjects(level.levelID))
-                      {%>
-                    <p><a href="subject.aspx"><%=subject.title%></a></p>
-                    <%}%>
-                </div>
-                <%}
-                  */
                   }
                   else if (((string)Session["userType"]).Equals("student")) // student see his class his subjects
                   {

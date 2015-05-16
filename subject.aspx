@@ -41,7 +41,7 @@
                         </thead>
                         <tbody>
                             <%
-                                List<MySession> sessions = Subject.GetSubjectSessions(Convert.ToInt32(Request.QueryString["subjectId"]),
+                                List<MySession> sessions = MySession.GetSubjectSessions(Convert.ToInt32(Request.QueryString["subjectId"]),
                                                                     Convert.ToInt32(Request.QueryString["classId"]));
                                                                     
                                  foreach(MySession session in sessions){
@@ -71,11 +71,18 @@
                 <div class="gadget">
                     <h2></h2>
                     <ul>
-                        
-                        <li><strong>Subject: </strong>Math-1</li>
-                        <li><strong>Class: </strong>1A</li>
-                        <li><strong>Teacher: </strong>Prof.Amgad Mohamed</li>
-                        <li><strong>Day: </strong>Monday</li>
+                        <%
+                            Subject subject = Subject.GetSubjectById(Convert.ToInt32(Request.QueryString["subjectId"]));
+                            ClassRoom classRoom = ClassRoom.GetClassRoomById(Convert.ToInt32(Request.QueryString["classId"]));
+                            Teacher teacher = Teacher.GetTeacherBySubjectAndClass(Convert.ToInt32(Request.QueryString["subjectId"]),
+                                                                                    Convert.ToInt32(Request.QueryString["classId"]));
+                            Schedule schedule = Schedule.GetScheduleBySubjectAndClass(Convert.ToInt32(Request.QueryString["subjectId"]),
+                                                                                        Convert.ToInt32(Request.QueryString["classId"]));
+                             %>
+                        <li><strong>Subject: </strong><%=subject.title %></li>
+                        <li><strong>Class: </strong><%=classRoom.classRoomID %>  <%=classRoom.levelID %></li>
+                        <li><strong>Teacher: </strong><%=teacher.name %></li>
+                        <li><strong>Day: </strong><%=schedule.day %></li>
 
                     </ul>
                 </div>
