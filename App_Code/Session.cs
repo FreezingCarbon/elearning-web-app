@@ -5,7 +5,7 @@ using System.Web;
 using System.Data.Sql;
 using System.Data.SqlClient;
 
-public class Session
+public class MySession
 {
     public int sessionID;
     public int scheduleID;
@@ -13,7 +13,7 @@ public class Session
     public string notesLink;
     public string videoLink;
 
-    public Session(int sessionID, DateTime date, string notesLink, string videoLink, Schedule schedule)
+    public MySession(int sessionID, DateTime date, string notesLink, string videoLink, Schedule schedule)
     {
         this.sessionID = sessionID;
         this.date = date;
@@ -22,7 +22,14 @@ public class Session
         this.scheduleID = schedule.scheduleID;
     }
 
-    public Session(int sessionID, DateTime date, string notesLink, string videoLink, int scheduleID)
+    public MySession( DateTime date, string notesLink, string videoLink, int scheduleID)
+    {
+        this.date = date;
+        this.notesLink = notesLink;
+        this.videoLink = videoLink;
+        this.scheduleID = scheduleID;
+    }
+    public MySession(int sessionID, DateTime date, string notesLink, string videoLink, int scheduleID)
     {
         this.sessionID = sessionID;
         this.date = date;
@@ -31,16 +38,16 @@ public class Session
         this.scheduleID = scheduleID;
     }
 
-    static public Session GetSessionById(int sessionId)
+    static public MySession GetSessionById(int sessionId)
     {
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
         cmd.CommandText = "select * from Session where  id = " + sessionId;
         SqlDataReader dataReader = cmd.ExecuteReader();
-        Session session = null;
+        MySession session = null;
         if (dataReader.Read())
-            session = new Session(Convert.ToInt32(dataReader.GetValue(0)),
+            session = new MySession(Convert.ToInt32(dataReader.GetValue(0)),
                                   dataReader.GetDateTime(2),
                                   dataReader.GetString(3),
                                   dataReader.GetString(4),

@@ -41,10 +41,10 @@
                         </thead>
                         <tbody>
                             <%
-                                List<Session> sessions = Subject.GetSubjectSessions(Convert.ToInt32(Request.QueryString["subjectId"]),
+                                List<MySession> sessions = Subject.GetSubjectSessions(Convert.ToInt32(Request.QueryString["subjectId"]),
                                                                     Convert.ToInt32(Request.QueryString["classId"]));
                                                                     
-                                 foreach(Session session in sessions){
+                                 foreach(MySession session in sessions){
                                  %>
                             <tr>
                                 <td><%=session.date %></td>
@@ -53,7 +53,7 @@
                                 <td><a href="<%=session.notesLink %>">Download</a></td>
                             </tr>
                             <%}
-                                if (Request.QueryString["type"] == "Teacher")
+                                if (Session["userType"].Equals("teacher"))
                               {%>
                             <tr>
                                 <td>
@@ -71,6 +71,7 @@
                 <div class="gadget">
                     <h2></h2>
                     <ul>
+                        
                         <li><strong>Subject: </strong>Math-1</li>
                         <li><strong>Class: </strong>1A</li>
                         <li><strong>Teacher: </strong>Prof.Amgad Mohamed</li>
@@ -84,36 +85,40 @@
 
         <div id="session_model" class="modal fade">
             <div class="modal-dialog">
+                <form runat="server">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">New Session</h4>
                     </div>
                     <div class="modal-body">
-                        <form name="session">
+                        <div name="session">
                             <div class="form-inline">
                                 <div class="form-group">
                                     <label for="date">Date</label>
-                                    <input type="date" class="form-control" name="date">
+                                     <asp:TextBox runat="server"  CssClass="form-control" TextMode="Date" ID="sdate"></asp:TextBox>
+
                                 </div>
                                 <br />
                                 <div class="form-group">
-                                    <label for="video">video</label>
-                                    <input type="file" class="form-control" name="video">
+                                    <label for="video">video Link</label>
+                           <asp:TextBox runat="server"  CssClass="form-control" TextMode="Url" ID="vlink"></asp:TextBox>
+
                                 </div>
                                 <br />
                                 <div class="form-group">
                                     <label for="notes">Notes</label>
-                                    <input type="file" class="form-control" name="notes">
+                           <asp:TextBox runat="server"  CssClass="form-control" TextMode="Url" ID="noteslink"></asp:TextBox>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <asp:Button runat="server" CssClass="btn btn-primary" Text="Save"  OnClick="createSession" />
+                        <button type="button" class="btn btn-primary">close</button>
                     </div>
                 </div>
+                    </form>
             </div>
         </div>
         <div id="video_model" class="modal fade">

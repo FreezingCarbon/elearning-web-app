@@ -68,4 +68,18 @@ public class Schedule
         cmd.ExecuteNonQuery();
         cmd.Connection.Close();
     }
+
+    public static int GetScheduleId(int subjectId, int classId)
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "select id from Schedule where subjectId = " + subjectId + "and classId = " + classId;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        int scheduleId=0;
+        if (dataReader.Read())
+            scheduleId = Convert.ToInt32(dataReader.GetValue(0));
+        cmd.Connection.Close();
+        return scheduleId;
+    }
 }

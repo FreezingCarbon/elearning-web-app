@@ -58,7 +58,7 @@
                     <ul>
                         <%foreach (Subject subject in classRoom.GetSubjects())
                           {%>
-                        <li><a href="subject.aspx"><%=subject.title%></a></li>
+                        <li><a href="subject.aspx?subjectId=<%=subject.subjectID %>&classId=<%=classRoom.classRoomID %>"><%=subject.title%></a></li>
                         <%}
                         %>
                     </ul>
@@ -73,7 +73,8 @@
                     <div class="clr"></div>
                     <%foreach (ClassRoom classRoom in subjectClasses.Item2)
                       {%>
-                    <p><a href="subject.aspx">Class <%=classRoom.classRoomID%></a></p>
+
+                    <p><a href="subject.aspx?subjectId=<%=subjectClasses.Item1.subjectID %>&classId=<%=classRoom.classRoomID %>">Class <%=classRoom.classRoomID%></a></p>
                     <%}%>
                 </div>
                 <%}

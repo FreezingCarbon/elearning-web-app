@@ -41,7 +41,7 @@ public class Subject
         return subject;
     }
 
-    static public List<Session> GetSubjectSessions(int subjectId, int classId)
+    static public List<MySession> GetSubjectSessions(int subjectId, int classId)
     {
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
@@ -52,11 +52,11 @@ public class Subject
                             where Schedule.subjectId = " + subjectId + @"
                                 and Schedule.classId = " + classId;
         SqlDataReader dataReader = cmd.ExecuteReader();
-        List<Session> sessions = new List<Session>();
+        List<MySession> sessions = new List<MySession>();
         while (dataReader.Read())
         {
             //public Session(int sessionID, DateTime date, string notesLink, string videoLink, int scheduleID)
-            sessions.Add(new Session(Convert.ToInt32(dataReader.GetValue(0)),
+            sessions.Add(new MySession(Convert.ToInt32(dataReader.GetValue(0)),
                                      Convert.ToDateTime(dataReader.GetValue(2)),
                                      dataReader.GetString(3),
                                      dataReader.GetString(4),
