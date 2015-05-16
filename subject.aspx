@@ -40,13 +40,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <%
+                                List<Session> sessions = Subject.GetSubjectSessions(Convert.ToInt32(Request.QueryString["subjectId"]),
+                                                                    Convert.ToInt32(Request.QueryString["classId"]));
+                                                                    
+                                 foreach(Session session in sessions){
+                                 %>
                             <tr>
-                                <td>22-05-2014</td>
+                                <td><%=session.date %></td>
                                 <td>
-                                    <button onclick="viewVideo('23')">View</button></td>
-                                <td><a href="notes.aspx">Download</a></td>
+                                    <button onclick="viewVideo('<%=session.videoLink %>')">View</button></td>
+                                <td><a href="<%=session.notesLink %>">Download</a></td>
                             </tr>
-                            <%if (Request.QueryString["type"] == "Teacher")
+                            <%}
+                                if (Request.QueryString["type"] == "Teacher")
                               {%>
                             <tr>
                                 <td>

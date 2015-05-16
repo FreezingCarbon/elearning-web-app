@@ -33,7 +33,7 @@ public class Subject
         cmd.CommandText = "select * from Subject where id = " + subjectId;
         SqlDataReader dataReader = cmd.ExecuteReader();
         Subject subject = null;
-        if(dataReader.Read())
+        if (dataReader.Read())
             subject = new Subject(Convert.ToInt32(dataReader.GetValue(0)),
                                   dataReader.GetString(2),
                                   Convert.ToInt32(dataReader.GetValue(1)));
@@ -41,12 +41,37 @@ public class Subject
         return subject;
     }
 
+    static public List<Session> GetSubjectSessions(int subjectId, int classId)
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = @"select Session.id, Session.scheduleId, Session.date, Session.notesLink, Session.videoLink
+                            from Session inner join Schedule
+                                on Session.scheduleId = Schedule.Id
+                            where Schedule.subjectId = " + subjectId + @"
+                                and Schedule.classId = " + classId;
+        SqlDataReader dataReader = cmd.ExecuteReader();
+        List<Session> sessions = new List<Session>();
+        while (dataReader.Read())
+        {
+            //public Session(int sessionID, DateTime date, string notesLink, string videoLink, int scheduleID)
+            sessions.Add(new Session(Convert.ToInt32(dataReader.GetValue(0)),
+                                     Convert.ToDateTime(dataReader.GetValue(2)),
+                                     dataReader.GetString(3),
+                                     dataReader.GetString(4),
+                                     Convert.ToInt32(dataReader.GetValue(1))));
+        }
+        cmd.Connection.Close();
+        return sessions;
+    }
+
     void Insert()
     {
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "insert into Subject values ( " 
+        cmd.CommandText = "insert into Subject values ( "
                           + this.subjectID + " , "
                           + this.levelID + " , '"
                           + this.title + "'  )";

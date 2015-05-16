@@ -22,7 +22,7 @@ public class Session
         this.scheduleID = schedule.scheduleID;
     }
 
-    private Session(int sessionID, DateTime date, string notesLink, string videoLink, int scheduleID)
+    public Session(int sessionID, DateTime date, string notesLink, string videoLink, int scheduleID)
     {
         this.sessionID = sessionID;
         this.date = date;
@@ -39,7 +39,7 @@ public class Session
         cmd.CommandText = "select * from Session where  id = " + sessionId;
         SqlDataReader dataReader = cmd.ExecuteReader();
         Session session = null;
-        if(dataReader.Read())
+        if (dataReader.Read())
             session = new Session(Convert.ToInt32(dataReader.GetValue(0)),
                                   dataReader.GetDateTime(2),
                                   dataReader.GetString(3),
@@ -47,5 +47,19 @@ public class Session
                                   Convert.ToInt32(dataReader.GetValue(1)));
         cmd.Connection.Close();
         return session;
+    }
+
+    public void insert()
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlConnection con = DatabaseConnectionFactory.GetConnection();
+        cmd.Connection = con;
+        cmd.CommandText = "insert into Session (scheduleId,date,notesLink,videoLink) OUTPUT INSERTED.id values ( "
+                          + this.scheduleID + " , '"
+                          + this.date + "' , '"
+                          + this.notesLink + "','"
+                          + this.videoLink + "')";
+        this.sessionID = Convert.ToInt32(cmd.ExecuteScalar());
+        cmd.Connection.Close();
     }
 }
