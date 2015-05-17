@@ -58,13 +58,6 @@
                                 <asp:Button CssClass="btn-info" Text="Class Schedule" runat="server" ID="CCSched" OnClick="createClassSched_Click" />
                    
                             </div>
-                            <div class="panel-body form-horizontal">
-                               <asp:ListBox runat="server" ID="teachers" CssClass="form-control" >
-
-                                </asp:ListBox>
-                               <asp:Button CssClass="btn-info" Text="Teacher Schedule" runat="server" ID="CTSched" OnClick="createTeachSched_Click" />
-                   
-                            </div>
 
                         </div>
                     </div>
@@ -142,19 +135,20 @@
                             <div class="panel-heading">
                                 <h4>Assign Teacher</h4>
                             </div>
+                             
                             <div class="panel-body form-horizontal">
                                 <label >Class:</label>
-                                <asp:ListBox runat="server" ID="AssignCList"  CssClass="form-control" >
+                                <asp:DropDownList runat="server" ID="AssignCList"  CssClass="form-control" >
 
-                                </asp:ListBox>
+                                </asp:DropDownList>
                                 <label >Subject:</label>
-                                <asp:ListBox runat="server" ID="AssignSList"  CssClass="form-control" >
+                                <asp:DropDownList runat="server" ID="AssignSList"  CssClass="form-control" >
 
-                                </asp:ListBox>
+                                </asp:DropDownList>
                                 <label >Teacher:</label>
-                                <asp:ListBox runat="server" ID="AssignTList"  CssClass="form-control" >
+                                <asp:DropDownList runat="server" ID="AssignTList"  CssClass="form-control" >
 
-                                </asp:ListBox>
+                                </asp:DropDownList>
                                 <asp:Button CssClass="btn-info" Text="Assign Teacher" runat="server" ID="AssignTeacher" OnClick="assignTeacher_Click" />
                    
                             </div>

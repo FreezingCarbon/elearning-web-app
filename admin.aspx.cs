@@ -37,8 +37,7 @@ public partial class admin : System.Web.UI.Page
             }
             foreach (Teacher tchr in tchrs)
             {
-                teachers.Items.Add(new ListItem(tchr.name, tchr.userID.ToString()));
-                AssignTList.Items.Add(new ListItem(tchr.name, tchr.userID.ToString()));
+                 AssignTList.Items.Add(new ListItem(tchr.name, tchr.userID.ToString()));
             }
             foreach (ELearn.User usr in usrs)
             {
@@ -70,12 +69,11 @@ public partial class admin : System.Web.UI.Page
     }
     protected void createClassSched_Click(object sender, EventArgs e)
     {
+        Session["schType"] = "class";
+        Session["classID"] = classes.SelectedValue;
         Response.Redirect("update_schedule.aspx");
     }
-    protected void createTeachSched_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("update_schedule.aspx");
-    }
+    
     protected void createAcc_Click(object sender, EventArgs e)
     {
         if(CATypes.SelectedValue.Equals("teacher")){

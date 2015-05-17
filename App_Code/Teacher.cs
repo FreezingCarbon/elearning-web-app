@@ -9,7 +9,8 @@ using System.Collections;
 public class Teacher : ELearn.User
 {
     public Teacher(int userID, string username, string password, string name, string mail,
-        DateTime lastSeen) : base(userID, username, password, name, mail, lastSeen) { }
+        DateTime lastSeen)
+        : base(userID, username, password, name, mail, lastSeen) { }
 
     static public Teacher GetUserById(int teacherId)
     {
@@ -21,15 +22,15 @@ public class Teacher : ELearn.User
         Teacher teacher = null;
         if (dataReader.Read())
         {
-            if (!dataReader.GetValue(6).ToString().Equals("teacher"))
+            if (!dataReader["userType"].ToString().Equals("teacher"))
                 throw new Exception("the user with the specified id is not a teacher");
 
-            teacher = new Teacher(Convert.ToInt32(dataReader.GetValue(0)),
-                                  dataReader.GetString(1),
-                                  dataReader.GetString(2),
-                                  dataReader.GetString(3),
-                                  dataReader.GetString(4),
-                                  dataReader.GetDateTime(5));
+            teacher = new Teacher(Convert.ToInt32(dataReader["id"]),
+                                  dataReader["username"].ToString(),
+                                  dataReader["password"].ToString(),
+                                  dataReader["name"].ToString(),
+                                  dataReader["mail"].ToString(),
+                                  Convert.ToDateTime(dataReader["lastSeen"]));
         }
         cmd.Connection.Close();
         return teacher;
@@ -108,7 +109,7 @@ public class Teacher : ELearn.User
                                 new Subject(subjectId, subjectTitle, levelId), new List<ClassRoom>()));
             }
 
-            subjects[index].Item2.Add(new ClassRoom(classId,levelId));
+            subjects[index].Item2.Add(new ClassRoom(classId, levelId));
         }
 
         return subjects;
@@ -119,7 +120,7 @@ public class Teacher : ELearn.User
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = "select * from( Class inner join Teaches on classID=id) where Teaches.teacherID = "+teacherID.ToString();
+        cmd.CommandText = "select * from( Class inner join Teaches on classID=id) where Teaches.teacherID = " + teacherID.ToString();
         SqlDataReader dr = cmd.ExecuteReader();
         while (dr.Read())
         {
@@ -127,7 +128,7 @@ public class Teacher : ELearn.User
         }
         return classes;
     }
-    
+
     static public List<Student> GetTeacherStudents(int teacherID)
     {
         List<ClassRoom> classes = GetTeacherClassRooms(teacherID);
@@ -145,7 +146,7 @@ public class Teacher : ELearn.User
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-     //   throw new Exception(""+username);
+        //   throw new Exception(""+username);
         cmd.CommandText = "insert into [User]  ([username],[password],[name],[mail],[lastSeen]"
            + ",[userType],[isAdmin],[classID])	OUTPUT INSERTED.id values ( '"
                           + username + "','"
