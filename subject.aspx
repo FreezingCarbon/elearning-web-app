@@ -8,6 +8,9 @@
     <script type="text/javascript">
         function viewVideo(videoID) {
             $("#video_model").modal('show');
+            $("#videoPath").attr('src', videoID);
+            $("#videoPlace").load();
+            
         }
 
     </script>
@@ -122,7 +125,7 @@
                     </div>
                     <div class="modal-footer">
                         <asp:Button runat="server" CssClass="btn btn-primary" Text="Save"  OnClick="createSession" />
-                        <button type="button" class="btn btn-primary">close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">close</button>
                     </div>
                 </div>
                     </form>
@@ -137,8 +140,8 @@
                     </div>
                     <div class="modal-body">
 
-                        <video width="100%" controls>
-                              <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
+                        <video id="videoPlace" width="100%" controls>
+                              <source  id="videoPath" src="" type=video/mp4>
                             Your browser does not support HTML5 video.
                         </video>
                     </div>

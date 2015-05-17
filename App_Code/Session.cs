@@ -61,7 +61,7 @@ public class MySession
         SqlCommand cmd = new SqlCommand();
         SqlConnection con = DatabaseConnectionFactory.GetConnection();
         cmd.Connection = con;
-        cmd.CommandText = @"select Session.id, Session.scheduleId, Session.sesstionDate, Session.notesLink, Session.videoLink
+        cmd.CommandText = @"select Session.id, Session.scheduleId, Session.[date], Session.notesLink, Session.videoLink
                             from Session inner join Schedule
                                 on Session.scheduleId = Schedule.Id
                             where Schedule.subjectId = " + subjectId + @"
@@ -70,11 +70,11 @@ public class MySession
         List<MySession> sessions = new List<MySession>();
         while (dataReader.Read())
         {
-            sessions.Add(new MySession(Convert.ToInt32(dataReader.GetValue(0)),
-                                     Convert.ToDateTime(dataReader.GetValue(2)),
-                                     dataReader.GetString(3),
-                                     dataReader.GetString(4),
-                                     Convert.ToInt32(dataReader.GetValue(1))));
+            sessions.Add(new MySession(Convert.ToInt32(dataReader["id"]),
+                                     Convert.ToDateTime(dataReader.GetDateTime(2)),
+                                     dataReader["notesLink"].ToString(),
+                                     dataReader["videoLink"].ToString(),
+                                     Convert.ToInt32(dataReader["scheduleId"])));
         }
         cmd.Connection.Close();
         return sessions;
